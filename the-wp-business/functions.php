@@ -667,3 +667,16 @@ function the_wp_business_getstart_setup_options () {
     update_option('the_wp_business_admin_notice', false );
 }
 // Admin notice code END
+
+
+/* MRK Digital accessibility and responsive enhancements. */
+function mrk_digital_enqueue_assets() {
+    wp_enqueue_script(
+        'mrk-digital-menu',
+        get_template_directory_uri() . '/assets/js/mrk-menu.js',
+        array(),
+        '1.0.0',
+        true
+    );
+}
+add_action( 'wp_enqueue_scripts', 'mrk_digital_enqueue_assets', 30 );
