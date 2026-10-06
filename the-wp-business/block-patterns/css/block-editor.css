@@ -1,0 +1,146 @@
+/*font family*/
+.main-banner-section h1 ,.main-banner-section p,.main-banner-section .wp-block-button__link,.main-service-section h2 ,.main-service-section p,.main-service-section .wp-block-button__link{
+  font-family: Montserrat !important;
+}
+/*banner section*/
+.main-banner-section{
+    min-height: 600px;
+}
+.main-banner-section .wp-block-buttons {
+    justify-content: center;
+}
+.main-banner-section h1{
+    letter-spacing: 1px;
+    color: #fff;
+    font-size: 33px;
+    font-weight: 800;
+    margin-bottom: -1rem !important;
+    line-height: 40px !important;
+    text-transform: uppercase;
+}
+.main-banner-section p{
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 0 7em;
+    color: #fff;
+}
+.main-banner-section .wp-block-button__link {
+    font-size: 14px !important;
+    padding: 13px 16px !important;
+    font-weight: 600;
+    text-decoration: none;
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    position: relative;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    text-transform: uppercase;
+}
+.main-banner-section .wp-block-button__link:hover{
+    color: #000 !important;
+}
+.main-banner-section .wp-block-button__link:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0 5px var(--primary-color);
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+}
+.main-banner-section .wp-block-button__link:hover:before, .main-banner-section .wp-block-button__link:focus:before, .main-banner-section .wp-block-button__link:active:before {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+}
+/*we think section*/
+.main-service-section{
+    gap: 0em !important;
+}
+.main-service-section h2{
+    color: #222222;
+    font-size: 30px;
+    text-transform: none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0 !important;
+}
+.main-service-section p{
+    font-size: 15px;
+    color: #666;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    font-weight: bolder;
+}
+.main-service-section .wp-block-button__link{
+    font-size: 15px !important;
+    padding: 13px 16px !important;
+    font-weight: 600;
+    text-decoration: none;
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    position: relative;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+.main-service-section .wp-block-button__link:hover{
+    color: #000 !important;
+}
+.main-service-section .wp-block-button__link:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0 5px var(--primary-color);
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+}
+.main-service-section .wp-block-button__link:hover:before, .main-service-section .wp-block-button__link:focus:before, .main-service-section .wp-block-button__link:active:before {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+}
+.service-section-col{
+    margin-top: 30px !important;
+}
