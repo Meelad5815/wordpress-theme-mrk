@@ -16,8 +16,8 @@ get_header();
           <h1 id="mrk-hero-title">آپ کی ہر آن لائن ضرورت، ایک ہی جگہ!</h1>
           <p class="mrk-hero-subtitle">اب تمام سرکاری، آن لائن، ویب، گرافک، آٹومیشن اور ٹیکنالوجی کی خدمات ایک ہی جگہ پروفیشنل انداز میں حاصل کریں۔</p>
           <div class="mrk-actions">
-            <a class="mrk-btn mrk-btn-gold" href="<?php echo esc_url( home_url('/contact/') ); ?>">رابطہ کریں</a>
-            <a class="mrk-btn mrk-btn-outline" href="<?php echo esc_url( home_url('/services/') ); ?>">تمام سروسز دیکھیں</a>
+            <a class="mrk-btn mrk-btn-gold" href="<?php echo esc_url( home_url('/contact-2/') ); ?>">رابطہ کریں</a>
+            <a class="mrk-btn mrk-btn-outline" href="<?php echo esc_url( home_url('/services-2/') ); ?>">تمام سروسز دیکھیں</a>
           </div>
           <div class="mrk-trust">
             <span>✓ Mobile Friendly</span>
