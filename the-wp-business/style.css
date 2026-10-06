@@ -2500,3 +2500,21 @@ span.post-title {
   .mrk-btn{width:100%}
   .mrk-section{padding:58px 0}
 }
+
+
+/* MRK Digital header, accessibility and footer polish. */
+.mrk-site-header .menu-sec{background:#07152b;border-bottom:2px solid #d7ad3b;z-index:1000}
+.mrk-site-header .menu-sec .site-title a,.mrk-site-header .menu-sec .site-description{color:#fff!important}
+.mrk-brand-kicker{display:block;color:#d7ad3b;font-size:10px;letter-spacing:2px;font-weight:800;margin-bottom:3px}
+.mrk-brand-logo{display:inline-block}
+.mrk-site-header .nav-menu>div>ul,.mrk-site-header .nav-menu>ul{display:flex;align-items:center;justify-content:center;gap:2px}
+.mrk-site-header .nav-menu a{color:#fff!important;font-weight:600;border-radius:5px;transition:background .2s ease,color .2s ease}
+.mrk-site-header .nav-menu a:hover,.mrk-site-header .nav-menu .current-menu-item>a,.mrk-site-header .nav-menu .current_page_item>a{color:#07152b!important;background:#d7ad3b}
+.mrk-menu-toggle{border:1px solid rgba(215,173,59,.6)!important;background:#07152b!important;color:#fff!important;border-radius:6px;cursor:pointer}
+.mrk-menu-toggle:focus-visible,.mrk-site-header a:focus-visible,.mrk-site-footer a:focus-visible{outline:3px solid #f1d77a;outline-offset:3px}
+.mrk-footer-brand{background:#07152b;color:#fff;border-top:2px solid #d7ad3b;padding:22px 0}
+.mrk-footer-brand .container{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.mrk-footer-brand strong{color:#d7ad3b;font-size:20px;letter-spacing:2px}
+.mrk-footer-brand span{color:rgba(255,255,255,.8);font-size:14px}
+@media(max-width:991px){.mrk-site-header .nav-menu>div>ul,.mrk-site-header .nav-menu>ul{display:block}.mrk-site-header .nav-menu a{display:block}.mrk-footer-brand .container{flex-direction:column;text-align:center}}
+@media(max-width:767px){.mrk-brand-kicker{font-size:9px}.mrk-site-header .site-title{font-size:22px}.mrk-footer-brand{padding:18px 0}.mrk-footer-brand strong{font-size:18px}}
