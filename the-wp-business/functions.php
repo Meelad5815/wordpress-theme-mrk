@@ -680,3 +680,31 @@ function mrk_digital_enqueue_assets() {
     );
 }
 add_action( 'wp_enqueue_scripts', 'mrk_digital_enqueue_assets', 30 );
+
+
+/* MRK Digital Services & Projects content types. */
+function mrk_digital_register_content_types() {
+    register_post_type( 'mrk_service', array(
+        'labels' => array(
+            'name' => 'MRK Services', 'singular_name' => 'MRK Service',
+            'add_new' => 'Add Service', 'add_new_item' => 'Add New Service',
+            'edit_item' => 'Edit Service', 'new_item' => 'New Service',
+            'view_item' => 'View Service', 'search_items' => 'Search Services',
+        ),
+        'public' => true, 'show_in_rest' => true, 'menu_icon' => 'dashicons-admin-tools',
+        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ),
+        'has_archive' => true, 'rewrite' => array( 'slug' => 'services' ),
+    ) );
+    register_post_type( 'mrk_project', array(
+        'labels' => array(
+            'name' => 'MRK Projects', 'singular_name' => 'MRK Project',
+            'add_new' => 'Add Project', 'add_new_item' => 'Add New Project',
+            'edit_item' => 'Edit Project', 'new_item' => 'New Project',
+            'view_item' => 'View Project', 'search_items' => 'Search Projects',
+        ),
+        'public' => true, 'show_in_rest' => true, 'menu_icon' => 'dashicons-portfolio',
+        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ),
+        'has_archive' => true, 'rewrite' => array( 'slug' => 'projects' ),
+    ) );
+}
+add_action( 'init', 'mrk_digital_register_content_types' );
