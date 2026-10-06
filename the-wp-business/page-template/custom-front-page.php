@@ -65,8 +65,57 @@ get_header();
             <span class="mrk-service-number"><?php echo esc_html($service['icon']); ?></span>
             <h3><?php echo esc_html($service['title']); ?></h3>
             <p><?php echo esc_html($service['text']); ?></p>
+            <a class="mrk-card-link" href="<?php echo esc_url( home_url('/services-2/') ); ?>">تفصیل دیکھیں <span aria-hidden="true">→</span></a>
           </article>
         <?php endforeach; ?>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="mrk-section mrk-projects" aria-labelledby="mrk-projects-title">
+    <div class="container">
+      <div class="mrk-section-head">
+        <span class="mrk-eyebrow">RECENT WORK</span>
+        <h2 id="mrk-projects-title">MRK Projects</h2>
+        <p>Automation، web development اور digital solutions کے منتخب کام۔</p>
+      </div>
+      <div class="mrk-project-grid">
+        <?php
+        $mrk_projects = new WP_Query( array(
+          'post_type'      => 'project',
+          'post_status'    => 'publish',
+          'posts_per_page' => 3,
+          'no_found_rows'  => true,
+        ) );
+        if ( $mrk_projects->have_posts() ) :
+          while ( $mrk_projects->have_posts() ) : $mrk_projects->the_post();
+        ?>
+          <article class="mrk-project-card">
+            <?php if ( has_post_thumbnail() ) : ?>
+              <a class="mrk-project-thumb" href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr( get_the_title() ); ?>">
+                <?php the_post_thumbnail( 'medium_large', array( 'loading' => 'lazy' ) ); ?>
+              </a>
+            <?php endif; ?>
+            <div class="mrk-project-body">
+              <span class="mrk-project-label">PROJECT</span>
+              <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+              <p><?php echo esc_html( wp_trim_words( get_the_excerpt(), 20 ) ); ?></p>
+              <a class="mrk-card-link" href="<?php the_permalink(); ?>">پروجیکٹ دیکھیں <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        <?php
+          endwhile;
+          wp_reset_postdata();
+        else :
+        ?>
+          <article class="mrk-project-card mrk-project-empty">
+            <span class="mrk-project-label">MRK PORTFOLIO</span>
+            <h3>پروجیکٹس جلد یہاں دکھائے جائیں گے</h3>
+            <p>اپنے مکمل شدہ web، automation اور digital projects کو portfolio میں شامل کریں۔</p>
+            <a class="mrk-card-link" href="<?php echo esc_url( home_url('/projects/') ); ?>">Portfolio دیکھیں <span aria-hidden="true">→</span></a>
+          </article>
+        <?php endif; ?>
       </div>
     </div>
   </section>
