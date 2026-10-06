@@ -1,128 +1,110 @@
 <?php
 /**
  * Template Name: Custom home page
+ * MRK Digital & Online Services Center home page
  */
+get_header();
+?>
 
-get_header(); ?>
+<main id="maincontent" role="main" class="mrk-home">
 
-<main id="maincontent" role="main">
-  <?php do_action('the_wp_business_above_slider_section'); ?>
-
- <?php if( get_theme_mod( 'the_wp_business_slider_hide', true)){?>
-    <section id="slider">
-      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="<?php echo esc_attr(get_theme_mod('the_wp_business_slider_speed',3000)); ?>"> 
-        <?php $the_wp_business_content_pages = array();
-          for ( $count = 1; $count <= 4; $count++ ) {
-            $mod = intval( get_theme_mod( 'the_wp_business_slidersettings_page' . $count ));
-            if ( 'page-none-selected' != $mod ) {
-              $the_wp_business_content_pages[] = $mod;
-            }
-          }
-          if( !empty($the_wp_business_content_pages) ) :
-            $args = array(
-              'post_type' => 'page',
-              'post__in' => $the_wp_business_content_pages,
-              'orderby' => 'post__in'
-            );
-            $query = new WP_Query( $args );
-            if ( $query->have_posts() ) :
-            $i = 1;
-        ?>     
-          <div class="carousel-inner" role="listbox">
-            <?php  while ( $query->have_posts() ) : $query->the_post(); ?>
-              <div <?php if($i == 1){echo 'class="carousel-item active"';} else{ echo 'class="carousel-item"';}?>>
-                <?php if(has_post_thumbnail()){
-                  the_post_thumbnail();
-                } else{?>
-                  <img src="<?php echo esc_url(get_template_directory_uri()); ?>/block-patterns/images/banner.png" alt="" />
-                <?php } ?>
-                <div class="carousel-caption">
-                  <div class="inner_carousel">
-                    <?php if ( get_theme_mod('the_wp_business_slider_title',true) != '' ) {?>
-                      <h1 class="p-0 mb-3"><?php esc_html(the_title()); ?></h1> 
-                    <?php }?>
-                    <?php if ( get_theme_mod('the_wp_business_slider_content',true) != '' ) {?>
-                      <p class="px-5"><?php $the_wp_business_excerpt = get_the_excerpt(); echo esc_html( the_wp_business_string_limit_words( $the_wp_business_excerpt, esc_attr(get_theme_mod('the_wp_business_slider_excerpt_number','15')))); ?></p> 
-                    <?php }?> 
-                    <?php if ( get_theme_mod('the_wp_business_slider_button_label','LEARN MORE') != '' && get_theme_mod('the_wp_business_slider_button',true) != ''|| get_theme_mod('the_wp_busines_slider_button_link') != '') {?>
-                      <div class ="read-more mt-md-4 mt-0">
-                        <a href="<?php echo esc_url(get_theme_mod('the_wp_business_slider_button_link')!= '') ? esc_url(get_theme_mod('the_wp_business_slider_button_link')) : esc_url(get_permalink()); ?>" class="hvr-sweep-to-right"><?php echo esc_html( get_theme_mod('the_wp_business_slider_button_label',__('LEARN MORE','the-wp-business')) ); ?><span class="screen-reader-text"><?php echo esc_html( get_theme_mod('the_wp_business_slider_button_label',__('LEARN MORE','the-wp-business')) ); ?></span></a>
-                      </div> 
-                    <?php }?>                   
-                  </div>
-                </div>
-              </div>
-            <?php $i++; endwhile; 
-            wp_reset_postdata();?>
+  <section class="mrk-hero" aria-labelledby="mrk-hero-title">
+    <div class="container">
+      <div class="mrk-hero-grid">
+        <div class="mrk-hero-copy">
+          <span class="mrk-kicker">MRK DIGITAL & ONLINE SERVICES CENTER</span>
+          <h1 id="mrk-hero-title">آپ کی ہر آن لائن ضرورت، ایک ہی جگہ!</h1>
+          <p class="mrk-hero-subtitle">اب تمام سرکاری، آن لائن، ویب، گرافک، آٹومیشن اور ٹیکنالوجی کی خدمات ایک ہی جگہ پروفیشنل انداز میں حاصل کریں۔</p>
+          <div class="mrk-actions">
+            <a class="mrk-btn mrk-btn-gold" href="<?php echo esc_url( home_url('/contact/') ); ?>">رابطہ کریں</a>
+            <a class="mrk-btn mrk-btn-outline" href="<?php echo esc_url( home_url('/services/') ); ?>">تمام سروسز دیکھیں</a>
           </div>
-        <?php else : ?>
-        <div class="no-postfound"></div>
-        <?php endif;
-        endif;?>
-        <?php if(get_theme_mod('the_wp_business_slider_arrow_hide_show', true)){?>
-          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"><i class="<?php echo esc_attr(get_theme_mod('the_wp_business_slider_prev_icon','fas fa-angle-left')); ?>"></i></span>
-            <span class="screen-reader-text"><?php esc_html_e('Previous','the-wp-business'); ?></span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"><i class="<?php echo esc_attr(get_theme_mod('the_wp_business_slider_next_icon','fas fa-angle-right')); ?>"></i></span>
-            <span class="screen-reader-text"><?php esc_html_e('Next','the-wp-business'); ?></span>
-          </a>
-        <?php } ?>  
-      </div>  
-      <div class="clearfix"></div>
-    </section> 
-  <?php }?>
+          <div class="mrk-trust">
+            <span>✓ Mobile Friendly</span>
+            <span>✓ Professional Service</span>
+            <span>✓ Fast Response</span>
+          </div>
+        </div>
+        <div class="mrk-hero-panel" aria-label="MRK Digital service highlights">
+          <div class="mrk-panel-badge">MRK</div>
+          <h2>Digital + Engineering</h2>
+          <p>Web & App Development • SEO • PLC • Arduino/ESP32 • Electrical & Online Services</p>
+          <div class="mrk-stats">
+            <div><strong>8+</strong><span>Core Areas</span></div>
+            <div><strong>24/7</strong><span>Online Inquiry</span></div>
+            <div><strong>100%</strong><span>Mobile First</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <?php do_action('the_wp_business_above_wethink_section'); ?>
+  <section class="mrk-section mrk-services" aria-labelledby="mrk-services-title">
+    <div class="container">
+      <div class="mrk-section-head">
+        <span class="mrk-eyebrow">OUR SERVICES</span>
+        <h2 id="mrk-services-title">MRK Digital کی اہم خدمات</h2>
+        <p>افراد، طلبہ، کاروبار اور انڈسٹری کے لیے ایک جامع ڈیجیٹل اور ٹیکنیکل سروس پلیٹ فارم۔</p>
+      </div>
 
-  <?php if( get_theme_mod( 'the_wp_business_wethink_post_setting') != '') { ?>
-    <section id="wethink" class="py-5">
-      <div class="container">
+      <div class="mrk-service-grid">
         <?php
-        $the_wp_business_postData1 =  get_theme_mod('the_wp_business_wethink_post_setting');
-        if($the_wp_business_postData1){
-          $args = array( 'p' => esc_html($the_wp_business_postData1 ,'the-wp-business'),
-          'post_type' => 'post');
-          $query = new WP_Query( $args );
-          if ( $query->have_posts() ) :
-            while ( $query->have_posts() ) : $query->the_post(); ?>
-            <div class="row">
-              <?php if(has_post_thumbnail()){ 
-                $thumb_col = 'col-lg-6 col-md-6';
-              $desc_col = 'col-lg-6 col-md-6';
-              }else{
-                $desc_col = 'col-lg-12 col-md-12';
-              } ?>
-              <div class="<?php echo esc_attr($thumb_col); ?>">
-                <?php the_post_thumbnail(); ?>
-              </div>
-              <div class="<?php echo esc_attr($desc_col); ?>">
-                <h2 class="m-0 p-0"><?php esc_html(the_title()); ?></h2>
-                <p><?php the_content(); ?></p>
-                <div class="clearfix"></div>
-                <div class="read-btn mt-4"><a class="button  hvr-sweep-to-right"  href="<?php esc_url(the_permalink()); ?>"><?php esc_html_e('READ MORE','the-wp-business'); ?><span class="screen-reader-text"><?php esc_html_e('READ MORE','the-wp-business'); ?></span></a>
-                </div>
-              </div>
-            </div>
-            <?php endwhile; 
-            wp_reset_postdata();?>
-          <?php else : ?>
-            <div class="no-postfound"></div>
-          <?php
-        endif; }?>
-        <div class="clearfix"></div>
-      </div> 
-    </section>
-  <?php }?>
+        $services = array(
+          array('icon'=>'01','title'=>'Digital & Online Services','text'=>'سرکاری و آن لائن فارم، دستاویزات، FBR، SECP اور دیگر ڈیجیٹل سہولیات۔'),
+          array('icon'=>'02','title'=>'Web & App Development','text'=>'WordPress، HTML/CSS/JS، ویب ایپس اور کاروباری ویب سائٹس۔'),
+          array('icon'=>'03','title'=>'SEO & Digital Marketing','text'=>'SEO، آن لائن برانڈنگ، کنٹینٹ اور بزنس کی ڈیجیٹل موجودگی۔'),
+          array('icon'=>'04','title'=>'Graphic Design','text'=>'کارڈ، دعوت نامہ، فلیکس، سوشل میڈیا اور بزنس ڈیزائن۔'),
+          array('icon'=>'05','title'=>'PLC & Industrial Automation','text'=>'PLC programming، control logic، troubleshooting اور industrial automation۔'),
+          array('icon'=>'06','title'=>'Arduino / ESP32','text'=>'Automation، sensors، controllers اور custom electronics projects۔'),
+          array('icon'=>'07','title'=>'Mobile Software','text'=>'موبائل software setup، troubleshooting اور digital assistance۔'),
+          array('icon'=>'08','title'=>'Electrical & Engineering','text'=>'Electrical work، design/consultation، control panels اور engineering support۔'),
+        );
+        foreach ($services as $service) :
+        ?>
+          <article class="mrk-service-card">
+            <span class="mrk-service-number"><?php echo esc_html($service['icon']); ?></span>
+            <h3><?php echo esc_html($service['title']); ?></h3>
+            <p><?php echo esc_html($service['text']); ?></p>
+          </article>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </section>
 
-  <?php do_action('the_wp_business_below_wethink_section'); ?>
+  <section class="mrk-section mrk-process" aria-labelledby="mrk-process-title">
+    <div class="container">
+      <div class="mrk-section-head">
+        <span class="mrk-eyebrow">HOW IT WORKS</span>
+        <h2 id="mrk-process-title">کام کروانے کا آسان طریقہ</h2>
+      </div>
+      <div class="mrk-process-grid">
+        <div class="mrk-step"><strong>01</strong><h3>رابطہ</h3><p>اپنی ضرورت WhatsApp یا رابطہ فارم کے ذریعے بتائیں۔</p></div>
+        <div class="mrk-step"><strong>02</strong><h3>مشورہ</h3><p>آپ کے کام کے مطابق مناسب حل اور طریقہ کار طے کیا جائے گا۔</p></div>
+        <div class="mrk-step"><strong>03</strong><h3>Development</h3><p>کام کو منظم، محفوظ اور پروفیشنل انداز میں مکمل کیا جائے گا۔</p></div>
+        <div class="mrk-step"><strong>04</strong><h3>Delivery</h3><p>تیار کام کی جانچ کے بعد آپ کو مکمل deliverable دیا جائے گا۔</p></div>
+      </div>
+    </div>
+  </section>
 
-  <div class="container">
-    <?php while ( have_posts() ) : the_post(); ?>
-      <div class="entry-content"><?php the_content(); ?></div>
-    <?php endwhile; // end of the loop. ?>
-  </div>
+  <section class="mrk-cta" aria-labelledby="mrk-cta-title">
+    <div class="container">
+      <div>
+        <span class="mrk-eyebrow">START YOUR PROJECT</span>
+        <h2 id="mrk-cta-title">اپنا کام آج ہی شروع کریں</h2>
+        <p>ویب سائٹ، آن لائن سروس، گرافک ڈیزائن، PLC یا automation project کے لیے ہم سے رابطہ کریں۔</p>
+      </div>
+      <a class="mrk-btn mrk-btn-gold" href="<?php echo esc_url( home_url('/contact/') ); ?>">ابھی رابطہ کریں</a>
+    </div>
+  </section>
+
+  <?php while ( have_posts() ) : the_post(); ?>
+    <?php if ( trim( get_the_content() ) !== '' ) : ?>
+      <section class="container mrk-page-content">
+        <?php the_content(); ?>
+      </section>
+    <?php endif; ?>
+  <?php endwhile; ?>
+
 </main>
 
 <?php get_footer(); ?>
