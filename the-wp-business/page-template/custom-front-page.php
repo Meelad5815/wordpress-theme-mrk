@@ -83,7 +83,7 @@ get_header();
       <div class="mrk-project-grid">
         <?php
         $mrk_projects = new WP_Query( array(
-          'post_type'      => 'project',
+          'post_type'      => 'mrk_project',
           'post_status'    => 'publish',
           'posts_per_page' => 3,
           'no_found_rows'  => true,
