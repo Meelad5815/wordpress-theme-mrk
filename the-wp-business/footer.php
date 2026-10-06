@@ -128,6 +128,16 @@
   <div class="custom-cursor"></div>
   <!-- .Custom cursor -->
 <?php endif; ?>
+  <?php
+  $mrk_whatsapp = get_theme_mod( 'mrk_whatsapp_number', '' );
+  if ( get_theme_mod( 'mrk_show_whatsapp', false ) && $mrk_whatsapp ) :
+      $mrk_label = get_theme_mod( 'mrk_whatsapp_label', 'WhatsApp پر رابطہ کریں' );
+  ?>
+    <a class="mrk-floating-whatsapp" href="<?php echo esc_url( 'https://wa.me/' . preg_replace( '/[^0-9]/', '', $mrk_whatsapp ) ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $mrk_label ); ?>">
+      <i class="fab fa-whatsapp" aria-hidden="true"></i>
+      <span><?php echo esc_html( $mrk_label ); ?></span>
+    </a>
+  <?php endif; ?>
   <?php wp_footer(); ?>
 </body>
 </html>
