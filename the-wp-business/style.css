@@ -2518,3 +2518,17 @@ span.post-title {
 .mrk-footer-brand span{color:rgba(255,255,255,.8);font-size:14px}
 @media(max-width:991px){.mrk-site-header .nav-menu>div>ul,.mrk-site-header .nav-menu>ul{display:block}.mrk-site-header .nav-menu a{display:block}.mrk-footer-brand .container{flex-direction:column;text-align:center}}
 @media(max-width:767px){.mrk-brand-kicker{font-size:9px}.mrk-site-header .site-title{font-size:22px}.mrk-footer-brand{padding:18px 0}.mrk-footer-brand strong{font-size:18px}}
+
+
+/* MRK mobile navigation state. */
+@media (max-width:991px){
+  .mrk-site-header #primary-site-navigation{display:none}
+  .mrk-site-header #primary-site-navigation.mrk-menu-open{display:block}
+  .mrk-site-header .mrk-menu-toggle{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:110px}
+  .mrk-site-header .main-menu-navigation{padding-top:8px!important;padding-bottom:8px!important}
+  .mrk-site-header .nav-menu ul li{margin:0!important}
+  .mrk-site-header .nav-menu ul li a{padding:12px 15px!important}
+}
+@media (min-width:992px){
+  .mrk-site-header .toggle-menu{display:none!important}
+}
