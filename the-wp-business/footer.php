@@ -17,7 +17,7 @@
     <a href="#content" class="back-to-top scroll-right text-center"><?php esc_html_e('Top', 'the-wp-business'); ?><span class="screen-reader-text"><?php esc_html_e('Back to Top', 'the-wp-business'); ?></span></a>
   <?php }?>
 <?php }?>
-  <footer role="contentinfo" id="footer" class="copyright-wrapper">
+  <footer role="contentinfo" id="footer" class="copyright-wrapper mrk-site-footer">
     <?php //Set widget areas classes based on user choice
       $the_wp_business_footer_columns = get_theme_mod('the_wp_business_footer_widget', '4');
       if ($the_wp_business_footer_columns == '3') {
@@ -93,6 +93,7 @@
         </div>
       </div>
     <?php } ?>  
+      <div class="mrk-footer-brand" aria-label="<?php esc_attr_e( 'MRK Digital & Online Services Center', 'the-wp-business' ); ?>"><div class="container"><strong>MRK DIGITAL</strong><span><?php esc_html_e( 'Digital & Online Services Center', 'the-wp-business' ); ?></span></div></div>
       <div class="footer <?php if( get_theme_mod( 'the_wp_business_copyright_sticky', false) == 1) { ?> copyright-sticky<?php } else { ?>close-sticky <?php } ?>">     
     <?php if (get_theme_mod('the_wp_business_copyright_hide_show', true)) {?>
       <div class="inner">
