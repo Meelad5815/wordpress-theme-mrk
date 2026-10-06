@@ -1,1 +1,0 @@
-<?php get_header(); ?><main class="mrk-content"><div class="mrk-wrap"><?php if(have_posts()):while(have_posts()):the_post();?><article><h1><?php the_title();?></h1><?php the_post_thumbnail();?><div><?php the_content();?></div></article><?php endwhile;else:?><h1>Nothing found</h1><?php endif;?></div></main><?php get_footer();?>
