@@ -35,7 +35,7 @@
       </div>
     <?php }?>
   <?php }?>
-  <header role="banner">
+  <header role="banner" class="mrk-site-header">
     <a class="screen-reader-text skip-link" href="#maincontent"><?php esc_html_e( 'Skip to content', 'the-wp-business' ); ?><span class="screen-reader-text"><?php esc_html_e( 'Skip to content', 'the-wp-business' ); ?></span></a>
     <div id="header">
       <?php if(get_theme_mod('the_wp_business_top_header',false)== false || get_theme_mod('the_wp_business_hide_topbar_responsive',true) == true){ ?>
@@ -75,7 +75,7 @@
       <?php }?>
       <div class="toggle-menu responsive-menu p-3">
         <?php  ?>
-          <button role="tab" class="mobiletoggle"><i class="<?php echo esc_html(get_theme_mod('the_wp_business_menu_open_icon','fas fa-bars')); ?> me-2"></i><?php echo esc_html( get_theme_mod('the_wp_business_mobile_menu_label', __('Menu','the-wp-business'))); ?><span class="screen-reader-text"><?php echo esc_html( get_theme_mod('the_wp_business_mobile_menu_label', __('Menu','the-wp-business'))); ?></span></button>
+          <button type="button" class="mobiletoggle mrk-menu-toggle" aria-controls="primary-site-navigation" aria-expanded="false"><i class="<?php echo esc_html(get_theme_mod('the_wp_business_menu_open_icon','fas fa-bars')); ?> me-2"></i><?php echo esc_html( get_theme_mod('the_wp_business_mobile_menu_label', __('Menu','the-wp-business'))); ?><span class="screen-reader-text"><?php echo esc_html( get_theme_mod('the_wp_business_mobile_menu_label', __('Menu','the-wp-business'))); ?></span></button>
         <?php ?>
         <?php if(get_theme_mod('the_wp_business_show_search',true) ){ ?>
           <div class="wrap"><?php get_search_form(); ?></div>
@@ -84,12 +84,14 @@
       <div class="menu-sec mt-2 <?php if( get_theme_mod( 'the_wp_business_sticky_header') != '') { ?> sticky-header"<?php } else { ?>close-sticky <?php } ?>">
         <div class="container">
           <div class="row">
-            <div class="the-wp-business-logo py-2 px-0 text-center col-lg-3 col-md-5 wow bounceInDown align-self-center">
+            <div class="the-wp-business-logo mrk-brand py-2 px-0 text-center col-lg-3 col-md-5 wow bounceInDown align-self-center">
               <?php if ( has_custom_logo() ) : ?>
-                <div class="site-logo"><?php the_custom_logo(); ?></div>
+                <span class="mrk-brand-logo">
+                <div class="site-logo"><?php the_custom_logo(); ?></span></div>
               <?php endif; ?>
               <?php $blog_info = get_bloginfo( 'name' ); ?>
               <?php if ( ! empty( $blog_info ) ) : ?>
+                <span class="mrk-brand-kicker"><?php echo esc_html__( 'MRK DIGITAL', 'the-wp-business' ); ?></span>
                 <?php if( get_theme_mod('the_wp_business_show_site_title',true) != ''){ ?>
                   <?php if ( is_front_page() && is_home() ) : ?>
                     <h1 class="site-title p-0"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
@@ -111,7 +113,7 @@
             </div>
             <div class="menubox align-self-center <?php if(get_theme_mod('the_wp_business_show_search',true)) { ?>col-lg-6 col-md-3" <?php } else { ?>col-lg-7 col-md-5 <?php } ?>">
               <div id="sidelong-menu" class="nav side-nav">
-                <nav id="primary-site-navigation" class="nav-menu" role="navigation" aria-label="<?php esc_attr_e( 'Top Menu', 'the-wp-business' ); ?>">
+                <nav id="primary-site-navigation" class="nav-menu" role="navigation" aria-label="<?php esc_attr_e( 'Primary Menu', 'the-wp-business' ); ?>">
                   <?php  
                     wp_nav_menu( array( 
                       'theme_location' => 'primary',
