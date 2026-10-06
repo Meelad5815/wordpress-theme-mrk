@@ -3909,6 +3909,46 @@ function the_wp_business_customize_register( $wp_customize ) {
 	));
 	
 }
+/* MRK Digital Center settings. */
+function mrk_digital_customize_register( $wp_customize ) {
+    $wp_customize->add_section( 'mrk_digital_section', array(
+        'title'    => __( 'MRK Digital Center', 'the-wp-business' ),
+        'priority' => 28,
+    ) );
+
+    $wp_customize->add_setting( 'mrk_whatsapp_number', array(
+        'default'           => '',
+        'sanitize_callback' => 'the_wp_business_sanitize_phone_number',
+    ) );
+    $wp_customize->add_control( 'mrk_whatsapp_number', array(
+        'label'       => __( 'WhatsApp Number', 'the-wp-business' ),
+        'description' => __( 'Enter international format without spaces, e.g. 923001234567.', 'the-wp-business' ),
+        'section'     => 'mrk_digital_section',
+        'type'        => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mrk_whatsapp_label', array(
+        'default'           => 'WhatsApp پر رابطہ کریں',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'mrk_whatsapp_label', array(
+        'label'   => __( 'WhatsApp Button Label', 'the-wp-business' ),
+        'section' => 'mrk_digital_section',
+        'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mrk_show_whatsapp', array(
+        'default'           => false,
+        'sanitize_callback' => 'the_wp_business_sanitize_checkbox',
+    ) );
+    $wp_customize->add_control( 'mrk_show_whatsapp', array(
+        'label'   => __( 'Show Floating WhatsApp Button', 'the-wp-business' ),
+        'section' => 'mrk_digital_section',
+        'type'    => 'checkbox',
+    ) );
+}
+add_action( 'customize_register', 'mrk_digital_customize_register', 20 );
+
 add_action( 'customize_register', 'the_wp_business_customize_register' );
 
 // logo resize
