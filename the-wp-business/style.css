@@ -2424,3 +2424,79 @@ span.post-title {
   transform: scale(1.5);
   opacity: 0.6;
 }
+
+
+/* =========================================================
+   MRK Digital & Online Services Center customization
+   Merged into the original The WP Business base theme.
+   ========================================================= */
+:root{
+  --mrk-navy:#07152b;
+  --mrk-blue:#0b2a52;
+  --mrk-gold:#d7ad3b;
+  --mrk-gold-light:#f1d77a;
+  --mrk-white:#fff;
+  --mrk-muted:#667085;
+  --mrk-border:#e8edf3;
+}
+.mrk-home{background:#fff;color:#162033}
+.mrk-home .container{width:92%;max-width:1200px;margin:0 auto}
+.mrk-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--mrk-navy),var(--mrk-blue));color:#fff;padding:78px 0}
+.mrk-hero:after{content:"";position:absolute;width:420px;height:420px;border:1px solid rgba(215,173,59,.25);border-radius:50%;right:-180px;top:-170px}
+.mrk-hero-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:55px;align-items:center;position:relative;z-index:1}
+.mrk-kicker,.mrk-eyebrow{display:inline-block;font-size:12px;letter-spacing:2px;font-weight:800;color:var(--mrk-gold);margin-bottom:12px}
+.mrk-hero h1{color:#fff;font-size:clamp(36px,5vw,64px);line-height:1.15;margin:0 0 18px;padding:0;font-weight:800}
+.mrk-hero-subtitle{color:rgba(255,255,255,.86);font-size:18px;line-height:1.9;max-width:720px}
+.mrk-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.mrk-btn{display:inline-flex!important;align-items:center;justify-content:center;padding:13px 24px;border-radius:6px;font-weight:800;text-decoration:none!important;min-height:48px}
+.mrk-btn-gold{background:var(--mrk-gold);color:var(--mrk-navy)!important}
+.mrk-btn-gold:hover{background:var(--mrk-gold-light);color:var(--mrk-navy)!important}
+.mrk-btn-outline{border:1px solid rgba(255,255,255,.45);color:#fff!important;background:transparent}
+.mrk-btn-outline:hover{border-color:var(--mrk-gold);color:#fff!important}
+.mrk-trust{display:flex;flex-wrap:wrap;gap:18px;margin-top:24px;font-size:13px;color:rgba(255,255,255,.75)}
+.mrk-hero-panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.2);backdrop-filter:blur(8px)}
+.mrk-panel-badge{width:58px;height:58px;border:2px solid var(--mrk-gold);border-radius:12px;display:grid;place-items:center;color:var(--mrk-gold);font-weight:900;font-size:20px;margin-bottom:22px}
+.mrk-hero-panel h2{color:#fff;font-size:26px;margin:0 0 10px;padding:0}
+.mrk-hero-panel p{color:rgba(255,255,255,.78);line-height:1.8}
+.mrk-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:25px}
+.mrk-stats div{border-top:1px solid rgba(255,255,255,.18);padding-top:14px}
+.mrk-stats strong{display:block;color:var(--mrk-gold);font-size:24px}
+.mrk-stats span{font-size:11px;color:rgba(255,255,255,.7)}
+.mrk-section{padding:78px 0}
+.mrk-section-head{text-align:center;max-width:760px;margin:0 auto 42px}
+.mrk-section-head h2{font-size:clamp(28px,4vw,42px);margin:0;padding:0;color:var(--mrk-navy)}
+.mrk-section-head p{margin-top:12px;color:var(--mrk-muted)}
+.mrk-service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.mrk-service-card{background:#fff;border:1px solid var(--mrk-border);border-radius:12px;padding:25px;min-height:210px;box-shadow:0 8px 25px rgba(7,21,43,.05);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.mrk-service-card:hover{transform:translateY(-5px);border-color:rgba(215,173,59,.7);box-shadow:0 15px 35px rgba(7,21,43,.1)}
+.mrk-service-number{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:9px;background:var(--mrk-navy);color:var(--mrk-gold);font-size:12px;font-weight:900}
+.mrk-service-card h3{font-size:18px;margin:17px 0 8px;padding:0;color:var(--mrk-navy)}
+.mrk-service-card p{font-size:14px;line-height:1.75;color:var(--mrk-muted)}
+.mrk-process{background:#f6f8fb}
+.mrk-process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.mrk-step{background:#fff;border-radius:12px;padding:25px;border:1px solid var(--mrk-border)}
+.mrk-step strong{color:var(--mrk-gold);font-size:28px}
+.mrk-step h3{margin:8px 0 4px;padding:0;color:var(--mrk-navy)}
+.mrk-step p{font-size:14px;color:var(--mrk-muted);line-height:1.7}
+.mrk-cta{background:var(--mrk-navy);color:#fff;padding:55px 0}
+.mrk-cta .container{display:flex;align-items:center;justify-content:space-between;gap:30px}
+.mrk-cta h2{color:#fff;font-size:clamp(28px,4vw,40px);margin:0;padding:0}
+.mrk-cta p{color:rgba(255,255,255,.75);margin-top:8px}
+.mrk-page-content{padding-top:40px;padding-bottom:40px}
+@media (max-width:900px){
+  .mrk-hero{padding:60px 0}
+  .mrk-hero-grid{grid-template-columns:1fr;gap:35px}
+  .mrk-service-grid,.mrk-process-grid{grid-template-columns:repeat(2,1fr)}
+  .mrk-cta .container{align-items:flex-start;flex-direction:column}
+}
+@media (max-width:600px){
+  .mrk-hero{padding:48px 0}
+  .mrk-home .container{width:90%}
+  .mrk-hero h1{font-size:36px}
+  .mrk-hero-subtitle{font-size:16px}
+  .mrk-service-grid,.mrk-process-grid{grid-template-columns:1fr}
+  .mrk-stats{gap:7px}
+  .mrk-actions{flex-direction:column}
+  .mrk-btn{width:100%}
+  .mrk-section{padding:58px 0}
+}
