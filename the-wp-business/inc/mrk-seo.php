@@ -210,3 +210,6 @@ function mrk_digital_robots( $robots ) {
     return $robots;
 }
 add_filter( 'wp_robots', 'mrk_digital_robots' );
+
+/* Replace the earlier service/project SEO hook with this unified layer. */
+remove_action( 'wp_head', 'mrk_digital_seo_head', 25 );
