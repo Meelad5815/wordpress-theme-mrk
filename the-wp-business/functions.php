@@ -1009,3 +1009,29 @@ function mrk_digital_excerpt_more( $more ) {
     return '…';
 }
 add_filter( 'excerpt_more', 'mrk_digital_excerpt_more' );
+
+/* MRK Digital legacy URL redirects. */
+function mrk_digital_legacy_redirects() {
+    if ( is_admin() || wp_doing_ajax() || wp_doing_cron() ) {
+        return;
+    }
+
+    $redirects = array(
+        '/about-2/' => '/about/',
+        '/services-2/' => '/services/',
+        '/blog-2/' => '/blog/',
+        '/faq-2/' => '/faq/',
+        '/contact-2/' => '/contact/',
+        '/contact-mrk-digital-center/' => '/contact/',
+        '/mrk-digital-center-web-app-graphic-design-digital-services-2/' => '/',
+    );
+
+    $path = wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH );
+    $path = '/' . ltrim( (string) $path, '/' );
+
+    if ( isset( $redirects[ $path ] ) ) {
+        wp_safe_redirect( home_url( $redirects[ $path ] ), 301 );
+        exit;
+    }
+}
+add_action( 'template_redirect', 'mrk_digital_legacy_redirects', 1 );
