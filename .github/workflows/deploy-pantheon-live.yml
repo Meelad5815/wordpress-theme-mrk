@@ -56,6 +56,12 @@ jobs:
           terminus site:info "${PANTHEON_SITE}" --field=name
           terminus env:list "${PANTHEON_SITE}" --format=table
 
+      - name: Set Pantheon Dev connection to Git
+        shell: bash
+        run: |
+          set -euo pipefail
+          terminus connection:set "${PANTHEON_SITE}.dev" git
+
       - name: Pull current Pantheon Dev code
         shell: bash
         run: |
