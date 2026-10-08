@@ -2590,3 +2590,55 @@ span.post-title {
  .mrk-service-card .mrk-project-thumb img,.mrk-project-card .mrk-project-thumb img{height:170px}
  .mrk-taxonomy-list{font-size:13px}
 }
+
+
+/* MRK premium responsive polish */
+.mrk-site-header{position:relative;z-index:100}
+.mrk-brand{position:relative}
+.mrk-brand-kicker{display:block;font-size:11px;letter-spacing:2px;font-weight:800;color:#c9a227!important;margin-bottom:2px}
+.mrk-brand .site-title a{font-weight:800!important;letter-spacing:.2px}
+.mrk-hero{overflow:hidden}
+.mrk-hero-copy{max-width:760px}
+.mrk-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.mrk-btn{display:inline-flex!important;align-items:center;justify-content:center;min-height:46px;padding:11px 20px!important;border-radius:10px!important;font-weight:700!important;text-decoration:none!important;transition:transform .2s ease,box-shadow .2s ease,background .2s ease!important}
+.mrk-btn:hover{transform:translateY(-2px)}
+.mrk-btn:focus-visible,.mrk-card-link:focus-visible,.mrk-menu-toggle:focus-visible,.closebtn:focus-visible{outline:3px solid #c9a227!important;outline-offset:3px}
+.mrk-btn-gold{box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.mrk-btn-outline{border:1px solid rgba(201,162,39,.8)!important}
+.mrk-service-card,.mrk-project-card,.mrk-step{transition:transform .22s ease,box-shadow .22s ease}
+.mrk-service-card:hover,.mrk-project-card:hover,.mrk-step:hover{transform:translateY(-4px)}
+.mrk-project-body{padding:22px}
+.mrk-project-label{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1.5px;color:#c9a227!important;margin-bottom:8px}
+.mrk-project-empty{display:flex;flex-direction:column;justify-content:center;min-height:240px}
+.mrk-cta{padding:56px 0}
+.mrk-cta .container{display:flex;align-items:center;justify-content:space-between;gap:28px}
+.mrk-cta h2{margin:6px 0 8px}
+.mrk-cta p{margin:0;max-width:720px}
+.mrk-floating-whatsapp{z-index:9999}
+@media (max-width:991px){
+ .mrk-site-header .menu-sec{margin-top:0!important}
+ .mrk-cta .container{flex-direction:column;align-items:flex-start}
+ .mrk-hero-grid{grid-template-columns:1fr!important}
+ .mrk-hero-panel{margin-top:8px}
+}
+@media (max-width:767px){
+ .mrk-site-header .header-top{font-size:12px}
+ .mrk-brand{padding-left:14px!important;padding-right:14px!important}
+ .mrk-brand-kicker{font-size:10px;letter-spacing:1.5px}
+ .mrk-actions{display:grid;grid-template-columns:1fr;width:100%;max-width:420px}
+ .mrk-btn{width:100%}
+ .mrk-trust{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important}
+ .mrk-section{padding-top:44px!important;padding-bottom:44px!important}
+ .mrk-section-head h2{font-size:28px!important;line-height:1.25}
+ .mrk-service-grid,.mrk-project-grid,.mrk-process-grid{grid-template-columns:1fr!important}
+ .mrk-service-card,.mrk-project-card{width:100%}
+ .mrk-cta{padding:42px 0}
+ .mrk-cta h2{font-size:27px}
+ .mrk-floating-whatsapp span{display:none}
+ .mrk-floating-whatsapp{width:54px!important;height:54px!important;padding:0!important;border-radius:50%!important;display:flex!important;align-items:center;justify-content:center;bottom:18px!important;right:16px!important}
+ .mrk-floating-whatsapp i{font-size:23px}
+}
+@media (prefers-reduced-motion:reduce){
+ .mrk-btn,.mrk-service-card,.mrk-project-card,.mrk-step{transition:none!important}
+ .mrk-btn:hover,.mrk-service-card:hover,.mrk-project-card:hover,.mrk-step:hover{transform:none!important}
+}
