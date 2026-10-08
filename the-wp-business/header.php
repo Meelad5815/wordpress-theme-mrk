@@ -87,7 +87,8 @@
             <div class="the-wp-business-logo mrk-brand py-2 px-0 text-center col-lg-3 col-md-5 wow bounceInDown align-self-center">
               <?php if ( has_custom_logo() ) : ?>
                 <span class="mrk-brand-logo">
-                <div class="site-logo"><?php the_custom_logo(); ?></span></div>
+                  <?php the_custom_logo(); ?>
+                </span>
               <?php endif; ?>
               <?php $blog_info = get_bloginfo( 'name' ); ?>
               <?php if ( ! empty( $blog_info ) ) : ?>
