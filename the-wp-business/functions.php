@@ -841,7 +841,9 @@ function mrk_digital_admin_columns( $columns, $post_type ) {
         return array(
             'cb' => isset( $columns['cb'] ) ? $columns['cb'] : '<input type="checkbox" />',
             'title' => 'Service',
+            'mrk_service_image' => 'Image',
             'mrk_service_area' => 'Service Area',
+            'mrk_order' => 'Order',
             'date' => 'Date',
         );
     }
@@ -850,7 +852,9 @@ function mrk_digital_admin_columns( $columns, $post_type ) {
         return array(
             'cb' => isset( $columns['cb'] ) ? $columns['cb'] : '<input type="checkbox" />',
             'title' => 'Project',
+            'mrk_project_image' => 'Image',
             'mrk_project_type' => 'Project Type',
+            'mrk_order' => 'Order',
             'date' => 'Date',
         );
     }
@@ -865,6 +869,20 @@ add_filter( 'manage_edit-mrk_project_columns', function( $columns ) {
 } );
 
 function mrk_digital_admin_column_content( $column, $post_id ) {
+    if ( 'mrk_service_image' === $column || 'mrk_project_image' === $column ) {
+        if ( has_post_thumbnail( $post_id ) ) {
+            echo get_the_post_thumbnail( $post_id, array( 64, 48 ), array( 'style' => 'width:64px;height:48px;object-fit:cover;border-radius:6px;' ) );
+        } else {
+            echo '<span aria-hidden="true">—</span>';
+        }
+        return;
+    }
+
+    if ( 'mrk_order' === $column ) {
+        echo esc_html( (string) get_post_field( 'menu_order', $post_id ) );
+        return;
+    }
+
     if ( 'mrk_service_area' === $column ) {
         $terms = get_the_terms( $post_id, 'mrk_service_area' );
     } elseif ( 'mrk_project_type' === $column ) {
