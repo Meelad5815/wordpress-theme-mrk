@@ -2695,3 +2695,34 @@ button,input,textarea,select{font-family:inherit}
  .mrk-hero-subtitle{font-size:16px;line-height:1.8}
  .mrk-section-head p{line-height:1.8}
 }
+
+
+/* ---------- MRK final UX hardening ---------- */
+html { scroll-behavior: smooth; }
+body { background:#f5f8fc; }
+button, input, textarea, select { max-width:100%; }
+button, input[type="submit"], .mrk-btn, .mrk-card-link { min-height:44px; }
+.mrk-site-header { position:relative; z-index:10000; }
+.mrk-site-header .custom-logo-link { display:inline-flex; align-items:center; }
+.mrk-site-header .custom-logo { max-height:64px; width:auto; }
+.mrk-page-hero, .mrk-hero { overflow:hidden; }
+.mrk-page-content img, .mrk-inner-page img, .mrk-project-thumb img { display:block; max-width:100%; height:auto; }
+.mrk-service-card, .mrk-project-card, .mrk-step { overflow:hidden; }
+.mrk-service-card h3, .mrk-project-card h3 { overflow-wrap:anywhere; }
+.mrk-floating-whatsapp { z-index:10001; }
+@media (max-width:991px){
+  .mrk-site-header .custom-logo { max-height:52px; }
+  .mrk-site-header .menu-sec { margin-top:0 !important; }
+  .mrk-site-header .container { width:100%; }
+  .mrk-site-header .nav-menu { max-height:calc(100vh - 90px); overflow-y:auto; -webkit-overflow-scrolling:touch; }
+}
+@media (max-width:575px){
+  .mrk-page-hero h1, .mrk-hero h1 { font-size:clamp(30px,9vw,44px) !important; line-height:1.15; }
+  .mrk-page-content, .mrk-section .container { padding-left:16px; padding-right:16px; }
+  .mrk-actions, .mrk-hero-actions { display:flex; flex-direction:column; gap:10px; }
+  .mrk-actions > *, .mrk-hero-actions > * { width:100%; text-align:center; }
+}
+@media (prefers-reduced-motion:reduce){
+  html { scroll-behavior:auto; }
+  *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
