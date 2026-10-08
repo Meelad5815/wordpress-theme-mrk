@@ -2577,3 +2577,16 @@ span.post-title {
 .mrk-page-content-card .entry-content img{max-width:100%;height:auto}
 .mrk-page-content-card .entry-content a{color:#9a7717!important;font-weight:600}
 @media(max-width:600px){.mrk-page-hero{padding:52px 0 46px}.mrk-page-body{margin-top:-18px}.mrk-page-content-card{padding:20px}.mrk-inner-featured{margin:-20px -20px 24px;border-radius:18px 18px 0 0}}
+
+
+/* MRK content taxonomy and admin-driven card polish. */
+.mrk-taxonomy-list{margin:0 0 24px;padding:10px 14px;border-left:3px solid #c9a227;background:#f7f9fc;font-size:14px;color:#40506a}
+.mrk-taxonomy-list strong{color:#102a4a}
+.mrk-service-card h3 a,.mrk-project-card h3 a{color:inherit!important;text-decoration:none}
+.mrk-service-card h3 a:hover,.mrk-project-card h3 a:hover{text-decoration:underline;text-decoration-color:#c9a227;text-underline-offset:4px}
+.mrk-service-card .mrk-project-thumb,.mrk-project-card .mrk-project-thumb{display:block;overflow:hidden;border-radius:12px 12px 0 0}
+.mrk-service-card .mrk-project-thumb img,.mrk-project-card .mrk-project-thumb img{display:block;width:100%;height:190px;object-fit:cover}
+@media (max-width:767px){
+ .mrk-service-card .mrk-project-thumb img,.mrk-project-card .mrk-project-thumb img{height:170px}
+ .mrk-taxonomy-list{font-size:13px}
+}
