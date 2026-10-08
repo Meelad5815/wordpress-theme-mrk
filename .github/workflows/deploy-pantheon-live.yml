@@ -126,8 +126,8 @@ jobs:
           terminus wp "${PANTHEON_SITE}.test" -- theme activate "${THEME_SLUG}"
           ACTIVE="$(terminus wp "${PANTHEON_SITE}.test" -- theme list --status=active --field=name)"
           echo "Active Test theme: ${ACTIVE}"
-          test "${ACTIVE}" = "MRK Digital" || {
-            echo "Unexpected active theme on Test."
+          test "${ACTIVE}" = "${THEME_SLUG}" || {
+            echo "Unexpected active theme slug on Test: ${ACTIVE}"
             exit 1
           }
           terminus wp "${PANTHEON_SITE}.test" -- rewrite flush
@@ -162,8 +162,8 @@ jobs:
           terminus env:clear-cache "${PANTHEON_SITE}.live"
           ACTIVE="$(terminus wp "${PANTHEON_SITE}.live" -- theme list --status=active --field=name)"
           echo "Active Live theme: ${ACTIVE}"
-          test "${ACTIVE}" = "MRK Digital" || {
-            echo "Unexpected active theme on Live."
+          test "${ACTIVE}" = "${THEME_SLUG}" || {
+            echo "Unexpected active theme slug on Live: ${ACTIVE}"
             exit 1
           }
 
