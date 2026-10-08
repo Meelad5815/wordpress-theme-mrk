@@ -32,6 +32,22 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Validate MRK theme before deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "${THEME_DIR}/style.css"
+          test -f "${THEME_DIR}/index.php"
+          test -f "${THEME_DIR}/functions.php"
+          test -f "${THEME_DIR}/comments.php"
+          echo "Checking PHP syntax in ${THEME_DIR}..."
+          find "${THEME_DIR}" -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+          echo "Checking for accidental debug output..."
+          if grep -RInE --exclude-dir=languages --exclude='*.min.js' '(^|[^A-Za-z_])(var_dump|print_r|die\(|exit\()' "${THEME_DIR}"; then
+            echo "Potential debug/termination code found in theme."
+            exit 1
+          fi
+          echo "MRK theme validation passed."
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
