@@ -1,0 +1,166 @@
+name: MRK Theme → Pantheon Live
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "the-wp-business/**"
+      - ".github/workflows/deploy-pantheon-live.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: mrk-theme-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build → Dev → Test → Live → Activate
+    runs-on: ubuntu-latest
+
+    env:
+      PANTHEON_SITE: ${{ vars.PANTHEON_SITE }}
+      THEME_DIR: the-wp-business
+      THEME_SLUG: the-wp-business
+
+    steps:
+      - name: Checkout MRK theme repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+
+      - name: Install and authenticate Terminus
+        uses: pantheon-systems/terminus-github-actions@v1
+        with:
+          pantheon-machine-token: ${{ secrets.PANTHEON_MACHINE_TOKEN }}
+
+      - name: Configure Pantheon SSH
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.PANTHEON_SSH_KEY }}
+
+      - name: Verify Pantheon access
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${PANTHEON_SITE}" || { echo "Missing GitHub Repository Variable: PANTHEON_SITE"; exit 1; }
+          terminus auth:whoami
+          terminus site:info "${PANTHEON_SITE}" --field=name
+          terminus env:list "${PANTHEON_SITE}" --format=table
+
+      - name: Pull current Pantheon Dev code
+        shell: bash
+        run: |
+          set -euo pipefail
+          GIT_URL="$(terminus connection:info "${PANTHEON_SITE}.dev" --field=git_url)"
+          git clone "${GIT_URL}" pantheon-site
+
+      - name: Replace only the original The WP Business theme
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d "pantheon-site/wp-content/themes/${THEME_DIR}" || {
+            echo "Pantheon Dev does not contain wp-content/themes/${THEME_DIR}"
+            exit 1
+          }
+
+          rsync -a --delete "${THEME_DIR}/" "pantheon-site/wp-content/themes/${THEME_DIR}/"
+
+          cd pantheon-site
+          git config user.name "MRK GitHub Actions"
+          git config user.email "actions@github.com"
+
+          if git diff --quiet -- "wp-content/themes/${THEME_DIR}"; then
+            echo "No theme changes to deploy."
+            echo "CHANGED=false" >> "${GITHUB_ENV}"
+          else
+            git add "wp-content/themes/${THEME_DIR}"
+            git commit -m "Deploy MRK theme: ${GITHUB_SHA}"
+            echo "CHANGED=true" >> "${GITHUB_ENV}"
+          fi
+
+      - name: Push theme to Pantheon Dev
+        if: env.CHANGED == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd pantheon-site
+          git push origin HEAD
+
+      - name: Deploy Dev code to Test
+        if: env.CHANGED == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          terminus env:deploy "${PANTHEON_SITE}.test" --sync-content --cc --note="MRK theme GitHub deployment ${GITHUB_SHA}" --yes
+
+      - name: Activate and verify MRK theme on Test
+        if: env.CHANGED == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          terminus wp "${PANTHEON_SITE}.test" -- theme activate "${THEME_SLUG}"
+          ACTIVE="$(terminus wp "${PANTHEON_SITE}.test" -- theme list --status=active --field=name)"
+          echo "Active Test theme: ${ACTIVE}"
+          test "${ACTIVE}" = "MRK Digital" || {
+            echo "Unexpected active theme on Test."
+            exit 1
+          }
+          terminus wp "${PANTHEON_SITE}.test" -- rewrite flush
+
+      - name: Smoke-test Test environment
+        if: env.CHANGED == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          TEST_URL="$(terminus env:view "${PANTHEON_SITE}.test" --print)"
+          echo "Testing: ${TEST_URL}"
+          curl --fail --silent --show-error --location --max-time 60 "${TEST_URL}" >/tmp/mrk-test.html
+          grep -qi "MRK Digital" /tmp/mrk-test.html || {
+            echo "MRK Digital marker not found in Test homepage."
+            exit 1
+          }
+
+      - name: Deploy Test code to Live
+        if: env.CHANGED == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          terminus env:deploy "${PANTHEON_SITE}.live" --cc --note="MRK theme production deployment ${GITHUB_SHA}" --yes
+
+      - name: Activate MRK theme on Live
+        if: env.CHANGED == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          terminus wp "${PANTHEON_SITE}.live" -- theme activate "${THEME_SLUG}"
+          terminus wp "${PANTHEON_SITE}.live" -- rewrite flush
+          terminus env:clear-cache "${PANTHEON_SITE}.live"
+          ACTIVE="$(terminus wp "${PANTHEON_SITE}.live" -- theme list --status=active --field=name)"
+          echo "Active Live theme: ${ACTIVE}"
+          test "${ACTIVE}" = "MRK Digital" || {
+            echo "Unexpected active theme on Live."
+            exit 1
+          }
+
+      - name: Verify Live homepage
+        if: env.CHANGED == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          LIVE_URL="$(terminus env:view "${PANTHEON_SITE}.live" --print)"
+          echo "Testing: ${LIVE_URL}"
+          curl --fail --silent --show-error --location --max-time 60 "${LIVE_URL}" >/tmp/mrk-live.html
+          grep -qi "MRK Digital" /tmp/mrk-live.html || {
+            echo "MRK Digital marker not found on Live homepage."
+            exit 1
+          }
+          echo "MRK theme deployment and activation verified on Live."
