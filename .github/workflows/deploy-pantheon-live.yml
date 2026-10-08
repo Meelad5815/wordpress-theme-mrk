@@ -88,7 +88,7 @@ jobs:
           git config user.name "MRK GitHub Actions"
           git config user.email "actions@github.com"
 
-          if git diff --quiet -- "wp-content/themes/${THEME_DIR}"; then
+          if [[ -z "$(git status --porcelain -- "wp-content/themes/${THEME_DIR}")" ]]; then
             echo "No theme changes to deploy."
             echo "CHANGED=false" >> "${GITHUB_ENV}"
           else
