@@ -47,16 +47,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.PANTHEON_SSH_KEY }}
 
-      - name: Trust Pantheon Git SSH host
-    shell: bash
-    run: |
-      set -euo pipefail
-      mkdir -p ~/.ssh
-      chmod 700 ~/.ssh
-      ssh-keyscan -t rsa,ecdsa,ed25519 codeserver.dev.pantheon.io 2>/dev/null >> ~/.ssh/known_hosts || true
-      chmod 600 ~/.ssh/known_hosts
-
-  - name: Verify Pantheon access
+      - name: Verify Pantheon access
         shell: bash
         run: |
           set -euo pipefail
@@ -70,6 +61,12 @@ jobs:
         run: |
           set -euo pipefail
           GIT_URL="$(terminus connection:info "${PANTHEON_SITE}.dev" --field=git_url)"
+          GIT_HOST="$(printf "%s\n" "${GIT_URL}" | sed -n 's#^[^@]*@\([^:]*\):.*$#\1#p')"
+          test -n "${GIT_HOST}" || { echo "Could not determine Pantheon Git host from: ${GIT_URL}"; exit 1; }
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          ssh-keyscan -H "${GIT_HOST}" >> ~/.ssh/known_hosts 2>/dev/null
+          chmod 600 ~/.ssh/known_hosts
           git clone "${GIT_URL}" pantheon-site
 
       - name: Replace only the original The WP Business theme
