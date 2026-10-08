@@ -49,29 +49,55 @@ get_header();
 
       <div class="mrk-service-grid">
         <?php
-        $services = array(
-          array('icon'=>'01','title'=>'Digital & Online Services','text'=>'سرکاری و آن لائن فارم، دستاویزات، FBR، SECP اور دیگر ڈیجیٹل سہولیات۔'),
-          array('icon'=>'02','title'=>'Web & App Development','text'=>'WordPress، HTML/CSS/JS، ویب ایپس اور کاروباری ویب سائٹس۔'),
-          array('icon'=>'03','title'=>'SEO & Digital Marketing','text'=>'SEO، آن لائن برانڈنگ، کنٹینٹ اور بزنس کی ڈیجیٹل موجودگی۔'),
-          array('icon'=>'04','title'=>'Graphic Design','text'=>'کارڈ، دعوت نامہ، فلیکس، سوشل میڈیا اور بزنس ڈیزائن۔'),
-          array('icon'=>'05','title'=>'PLC & Industrial Automation','text'=>'PLC programming، control logic، troubleshooting اور industrial automation۔'),
-          array('icon'=>'06','title'=>'Arduino / ESP32','text'=>'Automation، sensors، controllers اور custom electronics projects۔'),
-          array('icon'=>'07','title'=>'Mobile Software','text'=>'موبائل software setup، troubleshooting اور digital assistance۔'),
-          array('icon'=>'08','title'=>'Electrical & Engineering','text'=>'Electrical work، design/consultation، control panels اور engineering support۔'),
-        );
-        foreach ($services as $service) :
+        $mrk_services = new WP_Query( array(
+          'post_type'      => 'mrk_service',
+          'post_status'    => 'publish',
+          'posts_per_page' => 8,
+          'orderby'        => 'menu_order',
+          'order'          => 'ASC',
+          'no_found_rows'  => true,
+        ) );
+
+        if ( $mrk_services->have_posts() ) :
+          $mrk_service_number = 1;
+          while ( $mrk_services->have_posts() ) : $mrk_services->the_post();
         ?>
           <article class="mrk-service-card">
-            <span class="mrk-service-number"><?php echo esc_html($service['icon']); ?></span>
-            <h3><?php echo esc_html($service['title']); ?></h3>
-            <p><?php echo esc_html($service['text']); ?></p>
+            <span class="mrk-service-number"><?php echo esc_html( str_pad( (string) $mrk_service_number, 2, '0', STR_PAD_LEFT ) ); ?></span>
+            <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+            <p><?php echo esc_html( wp_trim_words( get_the_excerpt() ? get_the_excerpt() : get_the_content(), 22 ) ); ?></p>
+            <a class="mrk-card-link" href="<?php the_permalink(); ?>">تفصیل دیکھیں <span aria-hidden="true">→</span></a>
+          </article>
+        <?php
+            $mrk_service_number++;
+          endwhile;
+          wp_reset_postdata();
+        else :
+          $services = array(
+            array('icon'=>'01','title'=>'Digital & Online Services','text'=>'سرکاری و آن لائن فارم، دستاویزات، FBR، SECP اور دیگر ڈیجیٹل سہولیات۔'),
+            array('icon'=>'02','title'=>'Web & App Development','text'=>'WordPress، HTML/CSS/JS، ویب ایپس اور کاروباری ویب سائٹس۔'),
+            array('icon'=>'03','title'=>'SEO & Digital Marketing','text'=>'SEO، آن لائن برانڈنگ، کنٹینٹ اور بزنس کی ڈیجیٹل موجودگی۔'),
+            array('icon'=>'04','title'=>'Graphic Design','text'=>'کارڈ، دعوت نامہ، فلیکس، سوشل میڈیا اور بزنس ڈیزائن۔'),
+            array('icon'=>'05','title'=>'PLC & Industrial Automation','text'=>'PLC programming، control logic، troubleshooting اور industrial automation۔'),
+            array('icon'=>'06','title'=>'Arduino / ESP32','text'=>'Automation، sensors، controllers اور custom electronics projects۔'),
+            array('icon'=>'07','title'=>'Mobile Software','text'=>'موبائل software setup، troubleshooting اور digital assistance۔'),
+            array('icon'=>'08','title'=>'Electrical & Engineering','text'=>'Electrical work، design/consultation، control panels اور engineering support۔'),
+          );
+          foreach ($services as $service) :
+        ?>
+          <article class="mrk-service-card">
+            <span class="mrk-service-number"><?php echo esc_html( $service['icon'] ); ?></span>
+            <h3><?php echo esc_html( $service['title'] ); ?></h3>
+            <p><?php echo esc_html( $service['text'] ); ?></p>
             <a class="mrk-card-link" href="<?php echo esc_url( home_url('/services-2/') ); ?>">تفصیل دیکھیں <span aria-hidden="true">→</span></a>
           </article>
-        <?php endforeach; ?>
+        <?php
+          endforeach;
+        endif;
+        ?>
       </div>
     </div>
   </section>
-
 
   <section class="mrk-section mrk-projects" aria-labelledby="mrk-projects-title">
     <div class="container">
@@ -142,7 +168,7 @@ get_header();
         <h2 id="mrk-cta-title">اپنا کام آج ہی شروع کریں</h2>
         <p>ویب سائٹ، آن لائن سروس، گرافک ڈیزائن، PLC یا automation project کے لیے ہم سے رابطہ کریں۔</p>
       </div>
-      <a class="mrk-btn mrk-btn-gold" href="<?php echo esc_url( home_url('/contact/') ); ?>">ابھی رابطہ کریں</a>
+      <a class="mrk-btn mrk-btn-gold" href="<?php echo esc_url( home_url('/contact-2/') ); ?>">ابھی رابطہ کریں</a>
     </div>
   </section>
 
