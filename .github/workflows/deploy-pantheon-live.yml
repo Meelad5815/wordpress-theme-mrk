@@ -116,7 +116,6 @@ jobs:
           fi
 
       - name: Push theme to Pantheon Dev
-        if: env.CHANGED == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -124,14 +123,12 @@ jobs:
           git push origin HEAD
 
       - name: Deploy Dev code to Test
-        if: env.CHANGED == 'true'
         shell: bash
         run: |
           set -euo pipefail
           terminus env:deploy "${PANTHEON_SITE}.test" --sync-content --cc --note="MRK theme GitHub deployment ${GITHUB_SHA}" --yes
 
       - name: Activate and verify MRK theme on Test
-        if: env.CHANGED == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -145,7 +142,6 @@ jobs:
           terminus wp "${PANTHEON_SITE}.test" -- rewrite flush
 
       - name: Smoke-test Test environment
-        if: env.CHANGED == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -158,14 +154,12 @@ jobs:
           }
 
       - name: Deploy Test code to Live
-        if: env.CHANGED == 'true'
         shell: bash
         run: |
           set -euo pipefail
           terminus env:deploy "${PANTHEON_SITE}.live" --cc --note="MRK theme production deployment ${GITHUB_SHA}" --yes
 
       - name: Activate MRK theme on Live
-        if: env.CHANGED == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -180,7 +174,6 @@ jobs:
           }
 
       - name: Verify Live homepage
-        if: env.CHANGED == 'true'
         shell: bash
         run: |
           set -euo pipefail
