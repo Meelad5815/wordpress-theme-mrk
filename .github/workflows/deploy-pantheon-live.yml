@@ -262,3 +262,18 @@ jobs:
             exit 1
           }
           echo "MRK theme deployment and activation verified on Live."
+
+      - name: Smoke-test canonical Live pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          LIVE_URL="$(terminus env:view "${PANTHEON_SITE}.live" --print)"
+          for path in /about/ /services/ /projects/ /blog/ /faq/ /contact/; do
+            echo "Checking ${LIVE_URL}${path}"
+            curl --fail --silent --show-error --location --max-time 60 "${LIVE_URL}${path}" >/tmp/mrk-page.html
+            grep -qi "MRK Digital" /tmp/mrk-page.html || {
+              echo "MRK Digital marker missing from ${path}"
+              exit 1
+            }
+          done
+          echo "All canonical Live pages returned HTTP success and MRK branding."
