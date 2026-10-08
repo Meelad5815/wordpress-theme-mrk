@@ -722,6 +722,66 @@ function mrk_digital_register_content_types() {
     ) );
 }
 add_action( 'init', 'mrk_digital_register_content_types' );
+/* MRK admin columns and content guidance. */
+function mrk_digital_admin_columns( $columns, $post_type ) {
+    if ( 'mrk_service' === $post_type ) {
+        return array(
+            'cb' => isset( $columns['cb'] ) ? $columns['cb'] : '<input type="checkbox" />',
+            'title' => 'Service',
+            'mrk_service_area' => 'Service Area',
+            'date' => 'Date',
+        );
+    }
+
+    if ( 'mrk_project' === $post_type ) {
+        return array(
+            'cb' => isset( $columns['cb'] ) ? $columns['cb'] : '<input type="checkbox" />',
+            'title' => 'Project',
+            'mrk_project_type' => 'Project Type',
+            'date' => 'Date',
+        );
+    }
+
+    return $columns;
+}
+add_filter( 'manage_edit-mrk_service_columns', function( $columns ) {
+    return mrk_digital_admin_columns( $columns, 'mrk_service' );
+} );
+add_filter( 'manage_edit-mrk_project_columns', function( $columns ) {
+    return mrk_digital_admin_columns( $columns, 'mrk_project' );
+} );
+
+function mrk_digital_admin_column_content( $column, $post_id ) {
+    if ( 'mrk_service_area' === $column ) {
+        $terms = get_the_terms( $post_id, 'mrk_service_area' );
+    } elseif ( 'mrk_project_type' === $column ) {
+        $terms = get_the_terms( $post_id, 'mrk_project_type' );
+    } else {
+        return;
+    }
+
+    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+        echo esc_html( implode( ', ', wp_list_pluck( $terms, 'name' ) ) );
+    } else {
+        echo '<span aria-hidden="true">—</span>';
+    }
+}
+add_action( 'manage_mrk_service_posts_custom_column', 'mrk_digital_admin_column_content', 10, 2 );
+add_action( 'manage_mrk_project_posts_custom_column', 'mrk_digital_admin_column_content', 10, 2 );
+
+/* Helpful MRK editing instructions on service/project screens. */
+function mrk_digital_editor_help() {
+    $screen = get_current_screen();
+    if ( ! $screen || ! in_array( $screen->post_type, array( 'mrk_service', 'mrk_project' ), true ) ) {
+        return;
+    }
+
+    $title = 'MRK Content Checklist';
+    $message = 'Title واضح رکھیں، مختصر excerpt لکھیں، Featured Image شامل کریں، متعلقہ taxonomy منتخب کریں، اور Publish سے پہلے mobile preview ضرور چیک کریں۔';
+    echo '<div class="notice notice-info"><p><strong>' . esc_html( $title ) . ':</strong> ' . esc_html( $message ) . '</p></div>';
+}
+add_action( 'admin_notices', 'mrk_digital_editor_help' );
+
 
 /* MRK SEO metadata and structured data. */
 function mrk_digital_seo_head() {
