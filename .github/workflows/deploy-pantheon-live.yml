@@ -348,6 +348,10 @@ EOF
             if [[ -z "$id" ]]; then
               id="$(terminus wp "$LIVE" -- post create "$file" --post_type=mrk_service --post_status=publish --post_title="$title" --post_name="$slug" --post_excerpt="$excerpt" --meta_input="{\"_mrk_seo_description\":\"$excerpt\"}" --porcelain)"
               echo "Created MRK service: $slug (ID $id)"
+              TERM_ID="$(terminus wp "$LIVE" -- term get mrk_service_area "$area" --by=name --field=term_id 2>/dev/null || true)"
+              if [[ -z "$TERM_ID" ]]; then
+                terminus wp "$LIVE" -- term create mrk_service_area "$area" --porcelain
+              fi
               terminus wp "$LIVE" -- post term set "$id" mrk_service_area "$area" --by=name
             else
               echo "Existing MRK service kept: $slug (ID $id)"
