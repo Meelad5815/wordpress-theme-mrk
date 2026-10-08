@@ -986,3 +986,26 @@ function mrk_digital_flush_rewrite_rules() {
     flush_rewrite_rules();
 }
 add_action( 'after_switch_theme', 'mrk_digital_flush_rewrite_rules' );
+
+
+/* MRK UX/performance hardening: improve responsive images, embeds and accessible document titles. */
+function mrk_digital_image_attributes( $attr ) {
+    if ( empty( $attr['decoding'] ) ) {
+        $attr['decoding'] = 'async';
+    }
+    return $attr;
+}
+add_filter( 'wp_get_attachment_image_attributes', 'mrk_digital_image_attributes', 10 );
+
+function mrk_digital_document_title( $title ) {
+    if ( is_front_page() ) {
+        return 'MRK Digital & Online Services Center | Web, Automation & Digital Services';
+    }
+    return $title;
+}
+add_filter( 'pre_get_document_title', 'mrk_digital_document_title', 20 );
+
+function mrk_digital_excerpt_more( $more ) {
+    return '…';
+}
+add_filter( 'excerpt_more', 'mrk_digital_excerpt_more' );
