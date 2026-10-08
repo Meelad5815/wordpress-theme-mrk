@@ -9,6 +9,7 @@
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       nav.classList.toggle('mrk-menu-open', open);
       document.body.classList.toggle('mrk-nav-open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
     }
 
     toggle.addEventListener('click', function () {
@@ -16,7 +17,7 @@
     });
 
     nav.addEventListener('click', function (event) {
-      if (event.target.closest('.closebtn')) setMenu(false);
+      if (event.target.closest('.closebtn') || event.target.closest('a:not(.closebtn)')) setMenu(false);
     });
 
     document.addEventListener('keydown', function (event) {
