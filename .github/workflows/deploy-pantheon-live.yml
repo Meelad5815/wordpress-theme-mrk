@@ -56,6 +56,18 @@ jobs:
           terminus site:info "${PANTHEON_SITE}" --field=name
           terminus env:list "${PANTHEON_SITE}" --format=table
 
+      - name: Repair WordPress theme directory reference on Dev
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Current Dev active theme:"
+          terminus wp "${PANTHEON_SITE}.dev" -- theme list --status=active --field=name || true
+          echo "Installed themes:"
+          terminus wp "${PANTHEON_SITE}.dev" -- theme list --field=name || true
+          terminus wp "${PANTHEON_SITE}.dev" -- option update template "${THEME_SLUG}"
+          terminus wp "${PANTHEON_SITE}.dev" -- option update stylesheet "${THEME_SLUG}"
+          echo "Theme directory references repaired to: ${THEME_SLUG}"
+
       - name: Set Pantheon Dev connection to Git
         shell: bash
         run: |
