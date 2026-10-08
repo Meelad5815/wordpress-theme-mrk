@@ -753,6 +753,88 @@ function mrk_digital_resource_hints( $urls, $relation_type ) {
 }
 add_filter( 'wp_resource_hints', 'mrk_digital_resource_hints', 10, 2 );
 
+/* MRK one-click admin setup for service/project taxonomies. */
+function mrk_digital_setup_defaults() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+
+    $service_areas = array(
+        'Digital & Online Services',
+        'Web & App Development',
+        'SEO & Digital Marketing',
+        'Graphic Design',
+        'PLC & Industrial Automation',
+        'Arduino / ESP32',
+        'Mobile Software',
+        'Electrical & Engineering',
+    );
+    $project_types = array(
+        'Web Development',
+        'WordPress',
+        'Automation',
+        'PLC',
+        'Arduino / ESP32',
+        'Electrical Engineering',
+        'Graphic Design',
+        'Digital Services',
+    );
+
+    foreach ( $service_areas as $term ) {
+        if ( ! term_exists( $term, 'mrk_service_area' ) ) {
+            wp_insert_term( $term, 'mrk_service_area' );
+        }
+    }
+    foreach ( $project_types as $term ) {
+        if ( ! term_exists( $term, 'mrk_project_type' ) ) {
+            wp_insert_term( $term, 'mrk_project_type' );
+        }
+    }
+}
+
+function mrk_digital_admin_setup_page() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+
+    if ( isset( $_POST['mrk_setup_defaults'] ) ) {
+        check_admin_referer( 'mrk_setup_defaults_action', 'mrk_setup_defaults_nonce' );
+        mrk_digital_setup_defaults();
+        echo '<div class="notice notice-success is-dismissible"><p><strong>MRK Digital:</strong> Default Service Areas اور Project Types تیار کر دیے گئے ہیں۔</p></div>';
+    }
+    ?>
+    <div class="wrap">
+        <h1>MRK Digital Setup</h1>
+        <p>یہ setup صرف default categories/taxonomies بناتا ہے۔ موجودہ terms یا services/projects کو delete یا overwrite نہیں کرتا۔</p>
+        <form method="post">
+            <?php wp_nonce_field( 'mrk_setup_defaults_action', 'mrk_setup_defaults_nonce' ); ?>
+            <p><button type="submit" name="mrk_setup_defaults" class="button button-primary button-hero">MRK Default Setup چلائیں</button></p>
+        </form>
+        <hr>
+        <h2>Content workflow</h2>
+        <ol>
+            <li><strong>MRK Services</strong> میں service بنائیں۔</li>
+            <li>Excerpt، Featured Image اور Service Area شامل کریں۔</li>
+            <li><strong>MRK Projects</strong> میں completed work شامل کریں۔</li>
+            <li>Project Type، Featured Image اور ترتیب منتخب کریں۔</li>
+            <li>Publish کے بعد homepage، Services اور Projects pages خود update ہوں گے۔</li>
+        </ol>
+    </div>
+    <?php
+}
+
+function mrk_digital_admin_menu() {
+    add_submenu_page(
+        'edit.php?post_type=mrk_service',
+        'MRK Digital Setup',
+        'MRK Setup',
+        'manage_options',
+        'mrk-digital-setup',
+        'mrk_digital_admin_setup_page'
+    );
+}
+add_action( 'admin_menu', 'mrk_digital_admin_menu' );
+
 /* MRK admin columns and content guidance. */
 function mrk_digital_admin_columns( $columns, $post_type ) {
     if ( 'mrk_service' === $post_type ) {
