@@ -264,6 +264,13 @@ jobs:
           echo "MRK theme deployment and activation verified on Live."
 
 
+
+      - name: Run MRK content seeder
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/seed-mrk-content.sh "${PANTHEON_SITE}.live"
+
       - name: SEO and earning readiness smoke tests
         shell: bash
         run: |
