@@ -173,6 +173,67 @@ jobs:
             exit 1
           }
 
+      - name: Reconcile Live WordPress content structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          LIVE="${PANTHEON_SITE}.live"
+
+          echo "Rebuilding canonical MRK page structure on Live..."
+
+          # Resolve canonical pages by slug so this remains safe if page IDs differ.
+          HOME_ID="$(terminus wp "$LIVE" -- post list --post_type=page --name=mrk-digital-center --field=ID --format=ids | head -n 1)"
+          [[ -n "$HOME_ID" ]] || HOME_ID="$(terminus wp "$LIVE" -- option get page_on_front)"
+          ABOUT_ID="$(terminus wp "$LIVE" -- post list --post_type=page --name=about --field=ID --format=ids | head -n 1)"
+          SERVICES_ID="$(terminus wp "$LIVE" -- post list --post_type=page --name=services --field=ID --format=ids | head -n 1)"
+          PROJECTS_ID="$(terminus wp "$LIVE" -- post list --post_type=page --name=projects --field=ID --format=ids | head -n 1)"
+          BLOG_ID="$(terminus wp "$LIVE" -- post list --post_type=page --name=blog --field=ID --format=ids | head -n 1)"
+          FAQ_ID="$(terminus wp "$LIVE" -- post list --post_type=page --name=faq --field=ID --format=ids | head -n 1)"
+          CONTACT_ID="$(terminus wp "$LIVE" -- post list --post_type=page --name=contact --field=ID --format=ids | head -n 1)"
+
+          for value in "$HOME_ID" "$ABOUT_ID" "$SERVICES_ID" "$PROJECTS_ID" "$BLOG_ID" "$FAQ_ID" "$CONTACT_ID"; do
+            [[ -n "$value" ]] || { echo "A canonical page slug is missing on Live."; exit 1; }
+          done
+
+          terminus wp "$LIVE" -- option update show_on_front page
+          terminus wp "$LIVE" -- option update page_on_front "$HOME_ID"
+          terminus wp "$LIVE" -- option update page_for_posts "$BLOG_ID"
+          terminus wp "$LIVE" -- option update blogname "MRK Digital Center"
+          terminus wp "$LIVE" -- option update blogdescription "Web, App, WordPress, Automation & Digital Services"
+          terminus wp "$LIVE" -- option update timezone_string "Asia/Karachi"
+
+          # Remove legacy duplicate pages by their old slugs; WP-CLI sends them to Trash.
+          for slug in about-2 services-2 blog-2 faq-2 contact-2 contact-mrk-digital-center mrk-digital-center-web-app-graphic-design-digital-services-2 sample-page; do
+            IDS="$(terminus wp "$LIVE" -- post list --post_type=page --name="$slug" --format=ids)"
+            if [[ -n "$IDS" ]]; then
+              terminus wp "$LIVE" -- post delete $IDS
+            fi
+          done
+
+          # Update old homepage references to the canonical URLs.
+          terminus wp "$LIVE" -- search-replace 'href="/blog-2/"' 'href="/blog/"' wp_posts --skip-columns=guid
+          terminus wp "$LIVE" -- search-replace 'href="/contact-mrk-digital-center/"' 'href="/contact/"' wp_posts --skip-columns=guid
+
+          # Rebuild the Main Menu deterministically.
+          MENU_ITEMS="$(terminus wp "$LIVE" -- menu item list "Main Menu" --format=ids)"
+          if [[ -n "$MENU_ITEMS" ]]; then
+            terminus wp "$LIVE" -- menu item delete $MENU_ITEMS
+          fi
+          terminus wp "$LIVE" -- menu item add-post "Main Menu" "$HOME_ID" --title="Home" --position=1
+          terminus wp "$LIVE" -- menu item add-post "Main Menu" "$ABOUT_ID" --title="About" --position=2
+          terminus wp "$LIVE" -- menu item add-post "Main Menu" "$SERVICES_ID" --title="Services" --position=3
+          terminus wp "$LIVE" -- menu item add-post "Main Menu" "$PROJECTS_ID" --title="Projects" --position=4
+          terminus wp "$LIVE" -- menu item add-post "Main Menu" "$BLOG_ID" --title="Blog" --position=5
+          terminus wp "$LIVE" -- menu item add-post "Main Menu" "$FAQ_ID" --title="FAQ" --position=6
+          terminus wp "$LIVE" -- menu item add-post "Main Menu" "$CONTACT_ID" --title="Contact" --position=7
+          terminus wp "$LIVE" -- menu location assign "Main Menu" primary
+
+          terminus wp "$LIVE" -- rewrite structure '/%postname%/'
+          terminus wp "$LIVE" -- rewrite flush
+          terminus env:clear-cache "$LIVE"
+
+          echo "Live WordPress content structure reconciled."
+
       - name: Verify Live homepage
         shell: bash
         run: |
