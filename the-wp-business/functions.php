@@ -722,6 +722,37 @@ function mrk_digital_register_content_types() {
     ) );
 }
 add_action( 'init', 'mrk_digital_register_content_types' );
+/* Keep MRK Services and Projects archives ordered for portfolio presentation. */
+function mrk_digital_archive_order( $query ) {
+    if ( is_admin() || ! $query->is_main_query() ) {
+        return;
+    }
+
+    if ( $query->is_post_type_archive( array( 'mrk_service', 'mrk_project' ) ) ) {
+        $query->set( 'orderby', 'menu_order' );
+        $query->set( 'order', 'ASC' );
+    }
+}
+add_action( 'pre_get_posts', 'mrk_digital_archive_order' );
+
+/* Add safe loading hints for the main MRK font/icon resources used by the original theme. */
+function mrk_digital_resource_hints( $urls, $relation_type ) {
+    if ( 'preconnect' !== $relation_type ) {
+        return $urls;
+    }
+
+    $urls[] = array(
+        'href' => 'https://fonts.googleapis.com',
+        'crossorigin' => '',
+    );
+    $urls[] = array(
+        'href' => 'https://fonts.gstatic.com',
+        'crossorigin' => '',
+    );
+    return $urls;
+}
+add_filter( 'wp_resource_hints', 'mrk_digital_resource_hints', 10, 2 );
+
 /* MRK admin columns and content guidance. */
 function mrk_digital_admin_columns( $columns, $post_type ) {
     if ( 'mrk_service' === $post_type ) {
