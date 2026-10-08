@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PANTHEON_SITE: ${{ vars.PANTHEON_SITE }}
+      PANTHEON_SITE: ${{ vars.PANTHEON_SITE || 'mrkofficial786' }}
       THEME_DIR: the-wp-business
       THEME_SLUG: the-wp-business
 
