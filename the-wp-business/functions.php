@@ -107,7 +107,7 @@ function the_wp_business_activation_notice() {
 			echo '</p>';
 		echo '</div>';
 		echo '<div class="image-preview">';
-                echo '<a  href="https://www.themesglance.com/products/wp-theme-bundle" target="_blank" class="pre-img rel="noopener noreferrer"">';
+                echo '<a  href="https://www.themesglance.com/products/wp-theme-bundle" target="_blank" class="pre-img" rel="noopener noreferrer">';
                 echo '<img src="' . esc_url( get_template_directory_uri() . '/images/notice-img.png' ) . '" alt="Notice Image" />';
         echo '</a>';
 		echo '</div>';
