@@ -185,6 +185,50 @@ if ( ! function_exists( 'mrk_digital_general_schema' ) ) {
             );
         }
 
+        if ( is_page() && ! is_front_page() ) {
+            $graph[] = array(
+                '@type'       => 'WebPage',
+                '@id'         => get_permalink( $post_id ) . '#webpage',
+                'url'         => get_permalink( $post_id ),
+                'name'        => wp_strip_all_tags( get_the_title( $post_id ) ),
+                'description' => mrk_digital_seo_description( $post_id ),
+                'isPartOf'    => array( '@id' => home_url( '/#website' ) ),
+            );
+        }
+
+        if ( is_singular( 'mrk_service' ) ) {
+            $post_id = get_queried_object_id();
+            $service = array(
+                '@type'       => 'Service',
+                '@id'         => get_permalink( $post_id ) . '#service',
+                'name'        => wp_strip_all_tags( get_the_title( $post_id ) ),
+                'url'         => get_permalink( $post_id ),
+                'description' => mrk_digital_seo_description( $post_id ),
+                'provider'    => array( '@id' => home_url( '/#organization' ) ),
+                'serviceType' => wp_strip_all_tags( get_the_title( $post_id ) ),
+            );
+            $terms = get_the_terms( $post_id, 'mrk_service_area' );
+            if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+                $service['areaServed'] = array_values( wp_list_pluck( $terms, 'name' ) );
+            }
+            if ( has_post_thumbnail( $post_id ) ) {
+                $service['image'] = get_the_post_thumbnail_url( $post_id, 'large' );
+            }
+            $graph[] = $service;
+        }
+
+        if ( is_singular( 'mrk_project' ) ) {
+            $post_id = get_queried_object_id();
+            $graph[] = array(
+                '@type'       => 'CreativeWork',
+                '@id'         => get_permalink( $post_id ) . '#project',
+                'name'        => wp_strip_all_tags( get_the_title( $post_id ) ),
+                'url'         => get_permalink( $post_id ),
+                'description' => mrk_digital_seo_description( $post_id ),
+                'creator'     => array( '@id' => home_url( '/#organization' ) ),
+            );
+        }
+
         echo '<script type="application/ld+json">' . wp_json_encode(
             array(
                 '@context' => 'https://schema.org',
@@ -211,7 +255,6 @@ function mrk_digital_robots( $robots ) {
 }
 add_filter( 'wp_robots', 'mrk_digital_robots' );
 
-/* Replace the earlier service/project SEO hook with this unified layer. */
+/* Unified SEO layer; disable the legacy service/project-only emitter. */
 remove_action( 'wp_head', 'mrk_digital_seo_head', 25 );
-/* MRK SEO layer version: 1.1 */
-/* MRK SEO layer version: 1.2 */
+/* MRK SEO layer version: 1.3 */
