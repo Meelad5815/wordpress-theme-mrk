@@ -10,12 +10,18 @@ jQuery(function($){
 
 jQuery(function($){
 	$( '.toggle-menu button' ).click( function(e){
-        $( 'body' ).toggleClass( 'show-main-menu' );
+        e.preventDefault();
+        var $button = $( this );
+        var isOpen = $( 'body' ).toggleClass( 'show-main-menu' ).hasClass( 'show-main-menu' );
+        $button.attr( 'aria-expanded', isOpen ? 'true' : 'false' );
         var element = $( '.side-nav' );
-        the_wp_business_trapFocus( element );
+        if ( isOpen ) {
+            the_wp_business_trapFocus( element );
+        }
     });
 
     $( '.closebtn' ).click( function(e){
+        e.preventDefault();
         $( '.toggle-menu button' ).click();
         $( '.toggle-menu button' ).focus();
     });
