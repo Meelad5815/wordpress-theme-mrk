@@ -723,6 +723,57 @@ function mrk_digital_register_content_types() {
 }
 add_action( 'init', 'mrk_digital_register_content_types' );
 
+/* MRK SEO metadata and structured data. */
+function mrk_digital_seo_head() {
+    if ( ! is_singular( array( 'mrk_service', 'mrk_project' ) ) ) {
+        return;
+    }
+
+    $post_id = get_queried_object_id();
+    $title = wp_strip_all_tags( get_the_title( $post_id ) );
+    $description = wp_strip_all_tags( get_the_excerpt( $post_id ) );
+    if ( ! $description ) {
+        $description = wp_trim_words( wp_strip_all_tags( get_post_field( 'post_content', $post_id ) ), 28 );
+    }
+
+    if ( $description ) {
+        echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+    }
+
+    $type = get_post_type( $post_id ) === 'mrk_project' ? 'CreativeWork' : 'Service';
+    $schema = array(
+        '@context' => 'https://schema.org',
+        '@type' => $type,
+        'name' => $title,
+        'url' => get_permalink( $post_id ),
+        'description' => $description,
+        'provider' => array(
+            '@type' => 'Organization',
+            'name' => 'MRK Digital & Online Services Center',
+            'url' => home_url( '/' ),
+        ),
+    );
+
+    if ( has_post_thumbnail( $post_id ) ) {
+        $schema['image'] = get_the_post_thumbnail_url( $post_id, 'large' );
+    }
+
+    echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+}
+add_action( 'wp_head', 'mrk_digital_seo_head', 25 );
+
+/* Add service/project type classes to the body for targeted responsive styling. */
+function mrk_digital_body_classes( $classes ) {
+    if ( is_singular( 'mrk_service' ) ) {
+        $classes[] = 'mrk-service-single';
+    }
+    if ( is_singular( 'mrk_project' ) ) {
+        $classes[] = 'mrk-project-single';
+    }
+    return $classes;
+}
+add_filter( 'body_class', 'mrk_digital_body_classes' );
+
 
 /* Flush MRK rewrite rules once after theme activation. */
 function mrk_digital_flush_rewrite_rules() {
