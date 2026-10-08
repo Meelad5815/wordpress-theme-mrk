@@ -124,7 +124,7 @@
                       'fallback_cb' => 'wp_page_menu',
                     ) ); 
                    ?>
-                  <a href="#" class="closebtn responsive-menu"><?php echo esc_html( get_theme_mod('the_wp_business_close_menu_label', __('Close Menu','the-wp-business'))); ?><i class="<?php echo esc_html(get_theme_mod('the_wp_business_menu_close_icon','fas fa-times-circle')); ?> m-3"></i><span class="screen-reader-text"><?php echo esc_html( get_theme_mod('the_wp_business_close_menu_label', __('Close Menu','the-wp-business'))); ?></span></a>
+                  <button type="button" class="closebtn responsive-menu" aria-label="<?php echo esc_attr( get_theme_mod('the_wp_business_close_menu_label', __('Close Menu','the-wp-business'))); ?>"><?php echo esc_html( get_theme_mod('the_wp_business_close_menu_label', __('Close Menu','the-wp-business'))); ?><i class="<?php echo esc_attr(get_theme_mod('the_wp_business_menu_close_icon','fas fa-times-circle')); ?> m-3" aria-hidden="true"></i></button>
                 </nav>
               </div>
             </div>
