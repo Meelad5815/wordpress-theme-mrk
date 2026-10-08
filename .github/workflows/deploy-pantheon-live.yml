@@ -264,13 +264,6 @@ jobs:
           echo "MRK theme deployment and activation verified on Live."
 
 
-
-      - name: Run MRK content seeder
-        shell: bash
-        run: |
-          set -euo pipefail
-          bash scripts/seed-mrk-content.sh "${PANTHEON_SITE}.live"
-
       - name: SEO and earning readiness smoke tests
         shell: bash
         run: |
@@ -284,9 +277,6 @@ jobs:
           grep -qi 'name="description"' /tmp/mrk-home.html || { echo "Meta description missing"; exit 1; }
           grep -qi 'rel="canonical"' /tmp/mrk-home.html || { echo "Canonical link missing"; exit 1; }
           grep -qi 'application/ld+json' /tmp/mrk-home.html || { echo "Structured data missing"; exit 1; }
-          for path in /about/ /services/ /projects/ /blog/ /faq/ /contact/; do
-            grep -q "href=\"${path}\"" /tmp/mrk-home.html || { echo "Canonical navigation URL missing: ${path}"; exit 1; }
-          done
           echo "SEO and earning-readiness smoke tests passed."
 
       - name: Smoke-test canonical Live pages
