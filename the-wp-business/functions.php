@@ -921,17 +921,23 @@ function mrk_digital_seo_head() {
     }
 
     $post_id = get_queried_object_id();
+    $post_type = get_post_type( $post_id );
     $title = wp_strip_all_tags( get_the_title( $post_id ) );
     $description = wp_strip_all_tags( get_the_excerpt( $post_id ) );
+
     if ( ! $description ) {
         $description = wp_trim_words( wp_strip_all_tags( get_post_field( 'post_content', $post_id ) ), 28 );
     }
 
-    if ( $description ) {
+    /*
+     * Yoast SEO already owns the standard meta description/canonical layer.
+     * Avoid emitting a second description when Yoast is active.
+     */
+    if ( $description && ! defined( 'WPSEO_VERSION' ) ) {
         echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
     }
 
-    $type = get_post_type( $post_id ) === 'mrk_project' ? 'CreativeWork' : 'Service';
+    $type = 'mrk_project' === $post_type ? 'CreativeWork' : 'Service';
     $schema = array(
         '@context' => 'https://schema.org',
         '@type' => $type,
@@ -944,6 +950,14 @@ function mrk_digital_seo_head() {
             'url' => home_url( '/' ),
         ),
     );
+
+    if ( 'mrk_service' === $post_type ) {
+        $schema['serviceType'] = $title;
+        $terms = get_the_terms( $post_id, 'mrk_service_area' );
+        if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+            $schema['areaServed'] = array_values( wp_list_pluck( $terms, 'name' ) );
+        }
+    }
 
     if ( has_post_thumbnail( $post_id ) ) {
         $schema['image'] = get_the_post_thumbnail_url( $post_id, 'large' );
