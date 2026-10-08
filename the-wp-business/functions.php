@@ -693,7 +693,8 @@ function mrk_digital_register_content_types() {
         ),
         'public' => true, 'show_in_rest' => true, 'menu_icon' => 'dashicons-admin-tools',
         'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ),
-        'has_archive' => true, 'rewrite' => array( 'slug' => 'services' ),
+        'has_archive' => 'services', 'rewrite' => array( 'slug' => 'services' ),
+        'taxonomies' => array( 'mrk_service_area' ),
     ) );
     register_post_type( 'mrk_project', array(
         'labels' => array(
@@ -704,7 +705,28 @@ function mrk_digital_register_content_types() {
         ),
         'public' => true, 'show_in_rest' => true, 'menu_icon' => 'dashicons-portfolio',
         'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ),
-        'has_archive' => true, 'rewrite' => array( 'slug' => 'projects' ),
+        'has_archive' => 'projects', 'rewrite' => array( 'slug' => 'projects' ),
+        'taxonomies' => array( 'mrk_project_type' ),
+    ) );
+
+    register_taxonomy( 'mrk_service_area', 'mrk_service', array(
+        'labels' => array( 'name' => 'Service Areas', 'singular_name' => 'Service Area' ),
+        'public' => true, 'show_in_rest' => true, 'hierarchical' => true,
+        'rewrite' => array( 'slug' => 'service-area' ),
+    ) );
+
+    register_taxonomy( 'mrk_project_type', 'mrk_project', array(
+        'labels' => array( 'name' => 'Project Types', 'singular_name' => 'Project Type' ),
+        'public' => true, 'show_in_rest' => true, 'hierarchical' => true,
+        'rewrite' => array( 'slug' => 'project-type' ),
     ) );
 }
 add_action( 'init', 'mrk_digital_register_content_types' );
+
+
+/* Flush MRK rewrite rules once after theme activation. */
+function mrk_digital_flush_rewrite_rules() {
+    mrk_digital_register_content_types();
+    flush_rewrite_rules();
+}
+add_action( 'after_switch_theme', 'mrk_digital_flush_rewrite_rules' );
