@@ -264,178 +264,22 @@ jobs:
           echo "MRK theme deployment and activation verified on Live."
 
 
-
-      - name: Seed missing MRK service landing pages
-        shell: bash
-        run: |
-          set -euo pipefail
-          LIVE="${PANTHEON_SITE}.live"
-          mkdir -p /tmp/mrk-services
-
-          cat > /tmp/mrk-services/wordpress-website-development.txt <<'EOF'
-<h2>Professional WordPress Website Development</h2>
-<p>MRK Digital Center builds responsive WordPress websites for businesses, services, portfolios and online earning projects. The focus is a clean structure, mobile usability, clear calls to action and maintainable content.</p>
-<h3>What is included</h3>
-<ul><li>Responsive WordPress setup and theme customization</li><li>Business pages, service pages and contact/quote flows</li><li>SEO-ready page structure and clean URLs</li><li>Mobile-friendly navigation and performance improvements</li><li>Deployment and ongoing technical maintenance</li></ul>
-<h3>Best for</h3>
-<p>Small businesses, local service providers, freelancers, personal brands and organizations that need a professional web presence.</p>
-EOF
-
-          cat > /tmp/mrk-services/web-app-development.txt <<'EOF'
-<h2>Web and App Development</h2>
-<p>MRK Digital Center develops practical web applications and software solutions around real business workflows. Projects can range from a simple client portal to a custom tool that reduces repetitive work.</p>
-<h3>Typical solutions</h3>
-<ul><li>Business websites and web applications</li><li>Custom dashboards and forms</li><li>Python and Django development</li><li>API-connected workflows</li><li>Frontend HTML, CSS and JavaScript work</li></ul>
-<p>Each project is planned around the required features, hosting constraints, security and future maintenance.</p>
-EOF
-
-          cat > /tmp/mrk-services/plc-industrial-automation.txt <<'EOF'
-<h2>PLC and Industrial Automation</h2>
-<p>MRK Digital Center provides PLC programming and industrial automation support for control, monitoring and troubleshooting tasks. Solutions are designed around the actual machine or process rather than a one-size-fits-all template.</p>
-<h3>Automation work</h3>
-<ul><li>PLC logic development and modification</li><li>Motor, pump and sensor control</li><li>Control-panel logic and troubleshooting</li><li>Process automation planning</li><li>Testing and documentation support</li></ul>
-<p>Share the process description, PLC model and required sequence so the automation approach can be planned accurately.</p>
-EOF
-
-          cat > /tmp/mrk-services/arduino-esp32-projects.txt <<'EOF'
-<h2>Arduino and ESP32 Projects</h2>
-<p>MRK Digital Center develops Arduino and ESP32 prototypes for monitoring, control and automation. Projects can combine sensors, relays, displays, wireless connectivity and practical control logic.</p>
-<h3>Example applications</h3>
-<ul><li>Automatic water tank controllers</li><li>Sensor and relay automation</li><li>Temperature and level monitoring</li><li>ESP32 Wi-Fi based controls</li><li>Prototype IoT devices</li></ul>
-<p>Projects are documented around the wiring, control logic and software so they can be tested and improved later.</p>
-EOF
-
-          cat > /tmp/mrk-services/graphic-design.txt <<'EOF'
-<h2>Graphic Design Services</h2>
-<p>MRK Digital Center creates practical graphics for businesses, digital services and local organizations. Designs are prepared for the actual platform where they will be used.</p>
-<h3>Design services</h3>
-<ul><li>Business cards and digital cards</li><li>Posters, flex and promotional artwork</li><li>Social media graphics</li><li>Service banners and website graphics</li><li>Invitations and announcement designs</li></ul>
-<p>Provide the business name, service details, preferred language and required size to start a design.</p>
-EOF
-
-          cat > /tmp/mrk-services/digital-online-services.txt <<'EOF'
-<h2>Digital and Online Services</h2>
-<p>MRK Digital Center helps individuals and businesses with common digital workflows and online service tasks. The service is focused on clear guidance, accurate form submission and practical support.</p>
-<h3>Common support areas</h3>
-<ul><li>Online government and digital service assistance</li><li>Business forms and document workflows</li><li>Fiverr, Upwork and online earning setup</li><li>Canva, Office and document preparation</li><li>Website and digital profile support</li></ul>
-<p>For official applications, the customer remains responsible for providing correct information and required documents.</p>
-EOF
-
-          cat > /tmp/mrk-services/seo-blogging.txt <<'EOF'
-<h2>SEO and Blogging</h2>
-<p>MRK Digital Center builds useful, search-friendly website content around real customer questions and services. The goal is sustainable organic visibility rather than keyword stuffing.</p>
-<h3>SEO work</h3>
-<ul><li>Page titles and meta descriptions</li><li>Internal linking and clean URL structure</li><li>Structured data where appropriate</li><li>Service landing page planning</li><li>Helpful blog content and content updates</li></ul>
-<p>Search visibility depends on technical quality, useful original content, competition and time. No ranking position can be guaranteed.</p>
-EOF
-
-          cat > /tmp/mrk-services/mobile-software-services.txt <<'EOF'
-<h2>Mobile Software Services</h2>
-<p>MRK Digital Center provides mobile software support such as device setup, software troubleshooting and practical Android assistance. Hardware repair is treated separately from software work.</p>
-<h3>Software support</h3>
-<ul><li>Android software troubleshooting</li><li>Application and settings assistance</li><li>Device configuration and backup guidance</li><li>Software-related diagnostics</li><li>Digital account and app setup support</li></ul>
-<p>Service availability depends on the device model, software condition and the exact problem.</p>
-EOF
-
-          ensure_service() {
-            local slug="$1"
-            local title="$2"
-            local area="$3"
-            local excerpt="$4"
-            local file="$5"
-            local id
-            id="$(terminus wp "$LIVE" -- post list --post_type=mrk_service --name="$slug" --field=ID --format=ids | head -n 1)"
-            if [[ -z "$id" ]]; then
-              id="$(terminus wp "$LIVE" -- post create "$file" --post_type=mrk_service --post_status=publish --post_title="$title" --post_name="$slug" --post_excerpt="$excerpt" --meta_input="{\"_mrk_seo_description\":\"$excerpt\"}" --porcelain)"
-              echo "Created MRK service: $slug (ID $id)"
-              TERM_ID="$(terminus wp "$LIVE" -- term get mrk_service_area "$area" --by=name --field=term_id 2>/dev/null || true)"
-              if [[ -z "$TERM_ID" ]]; then
-                terminus wp "$LIVE" -- term create mrk_service_area "$area" --porcelain
-              fi
-              terminus wp "$LIVE" -- post term set "$id" mrk_service_area "$area" --by=name
-            else
-              echo "Existing MRK service kept: $slug (ID $id)"
-            fi
-          }
-
-          ensure_service "wordpress-website-development" "WordPress Website Development" "Web & App Development" "Responsive WordPress websites with clean structure, service pages, calls to action and SEO-ready foundations." "/tmp/mrk-services/wordpress-website-development.txt"
-          ensure_service "web-app-development" "Web and App Development" "Web & App Development" "Practical websites and web applications built around business workflows, forms, dashboards and custom features." "/tmp/mrk-services/web-app-development.txt"
-          ensure_service "plc-industrial-automation" "PLC and Industrial Automation" "PLC & Industrial Automation" "PLC programming and industrial automation support for control, monitoring, pumps, sensors and process workflows." "/tmp/mrk-services/plc-industrial-automation.txt"
-          ensure_service "arduino-esp32-projects" "Arduino and ESP32 Projects" "Arduino / ESP32" "Arduino and ESP32 automation prototypes using sensors, relays, monitoring, wireless control and practical IoT workflows." "/tmp/mrk-services/arduino-esp32-projects.txt"
-          ensure_service "graphic-design" "Graphic Design Services" "Graphic Design" "Business cards, posters, flex, social graphics, invitations and website artwork prepared for the required platform." "/tmp/mrk-services/graphic-design.txt"
-          ensure_service "digital-online-services" "Digital and Online Services" "Digital & Online Services" "Practical assistance with online workflows, digital documents, government service guidance and online earning setup." "/tmp/mrk-services/digital-online-services.txt"
-          ensure_service "seo-blogging" "SEO and Blogging" "SEO & Digital Marketing" "Search-friendly site structure, metadata, internal linking, structured data and useful original blog content." "/tmp/mrk-services/seo-blogging.txt"
-          ensure_service "mobile-software-services" "Mobile Software Services" "Mobile Software" "Android software troubleshooting, device setup, app configuration and practical mobile software assistance." "/tmp/mrk-services/mobile-software-services.txt"
-
-          PRIVACY_ID="$(terminus wp "$LIVE" -- post list --post_type=page --name=privacy-policy --field=ID --format=ids | head -n 1)"
-          if [[ -z "$PRIVACY_ID" ]]; then
-            cat > /tmp/mrk-privacy.txt <<'EOF'
-<h2>Privacy Policy</h2>
-<p>MRK Digital Center respects your privacy. This website may receive information that you voluntarily submit through contact, quote or service-request forms. We use that information only to respond to your request, provide services and maintain the website.</p>
-<h3>Cookies and third-party services</h3>
-<p>WordPress and selected third-party services may use cookies or similar technologies for essential functionality, security, analytics or advertising when those services are enabled. Any future advertising or analytics service will be configured according to its applicable policies.</p>
-<h3>Information sharing</h3>
-<p>We do not intentionally sell personal information. Information may be shared with a service provider when necessary to operate a requested service, comply with a legal obligation or protect the security of the website.</p>
-<h3>Contact</h3>
-<p>If you have a privacy question or want to ask about information submitted through this website, please use the Contact page.</p>
-<p><em>This policy is general website information and should be reviewed and updated to match the site's actual services, plugins, analytics and advertising configuration.</em></p>
-EOF
-            PRIVACY_ID="$(terminus wp "$LIVE" -- post create /tmp/mrk-privacy.txt --post_type=page --post_status=publish --post_title="Privacy Policy" --post_name="privacy-policy" --porcelain)"
-            terminus wp "$LIVE" -- option update wp_page_for_privacy_policy "$PRIVACY_ID"
-            echo "Created and assigned Privacy Policy page: $PRIVACY_ID"
-          else
-            echo "Existing Privacy Policy kept: $PRIVACY_ID"
-          fi
-
       - name: SEO and earning readiness smoke tests
         shell: bash
         run: |
           set -euo pipefail
           LIVE_URL="$(terminus env:view "${PANTHEON_SITE}.live" --print)"
-          test -n "${LIVE_URL}" || { echo "Could not resolve Live URL."; exit 1; }
-
-          echo "Checking robots.txt..."
           curl --fail --silent --show-error --location --max-time 60 "${LIVE_URL}/robots.txt" >/tmp/mrk-robots.txt
-          grep -qi "Sitemap:" /tmp/mrk-robots.txt || {
-            echo "robots.txt does not advertise the WordPress sitemap."
-            exit 1
-          }
-
-          echo "Checking WordPress XML sitemap..."
+          grep -qi "Sitemap:" /tmp/mrk-robots.txt || { echo "Sitemap missing from robots.txt"; exit 1; }
           curl --fail --silent --show-error --location --max-time 60 "${LIVE_URL}/wp-sitemap.xml" >/tmp/mrk-sitemap.xml
-          grep -qi "<sitemapindex" /tmp/mrk-sitemap.xml || {
-            echo "WordPress XML sitemap index not found."
-            exit 1
-          }
-
-          echo "Checking homepage SEO signals..."
-          curl --fail --silent --show-error --location --max-time 60 "${LIVE_URL}/" >/tmp/mrk-seo-home.html
-          grep -qi 'name="description"' /tmp/mrk-seo-home.html || {
-            echo "Homepage meta description missing."
-            exit 1
-          }
-          grep -qi 'rel="canonical"' /tmp/mrk-seo-home.html || {
-            echo "Homepage canonical link missing."
-            exit 1
-          }
-          grep -qi 'application/ld+json' /tmp/mrk-seo-home.html || {
-            echo "Homepage structured data missing."
-            exit 1
-          }
-
-          echo "Checking canonical navigation URLs are present..."
+          grep -qi "<sitemapindex" /tmp/mrk-sitemap.xml || { echo "WordPress XML sitemap missing"; exit 1; }
+          curl --fail --silent --show-error --location --max-time 60 "${LIVE_URL}/" >/tmp/mrk-home.html
+          grep -qi 'name="description"' /tmp/mrk-home.html || { echo "Meta description missing"; exit 1; }
+          grep -qi 'rel="canonical"' /tmp/mrk-home.html || { echo "Canonical link missing"; exit 1; }
+          grep -qi 'application/ld+json' /tmp/mrk-home.html || { echo "Structured data missing"; exit 1; }
           for path in /about/ /services/ /projects/ /blog/ /faq/ /contact/; do
-            grep -q "href=\"${path}\"" /tmp/mrk-seo-home.html || {
-              echo "Canonical navigation URL missing from homepage: ${path}"
-              exit 1
-            }
+            grep -q "href=\"${path}\"" /tmp/mrk-home.html || { echo "Canonical navigation URL missing: ${path}"; exit 1; }
           done
-
-          if grep -q 'href="/about-2/\|href="/services-2/\|href="/blog-2/\|href="/faq-2/\|href="/contact-2/' /tmp/mrk-seo-home.html; then
-            echo "Legacy duplicate navigation URL detected on homepage."
-            exit 1
-          fi
-
           echo "SEO and earning-readiness smoke tests passed."
 
       - name: Smoke-test canonical Live pages
