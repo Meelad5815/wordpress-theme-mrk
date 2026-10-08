@@ -60,7 +60,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          terminus connection:set "${PANTHEON_SITE}.dev" git
+          terminus connection:set "${PANTHEON_SITE}.dev" git --yes
 
       - name: Pull current Pantheon Dev code
         shell: bash
