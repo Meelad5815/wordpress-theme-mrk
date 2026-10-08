@@ -263,6 +263,58 @@ jobs:
           }
           echo "MRK theme deployment and activation verified on Live."
 
+
+      - name: SEO and earning readiness smoke tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          LIVE_URL="$(terminus env:view "${PANTHEON_SITE}.live" --print)"
+          test -n "${LIVE_URL}" || { echo "Could not resolve Live URL."; exit 1; }
+
+          echo "Checking robots.txt..."
+          curl --fail --silent --show-error --location --max-time 60 "${LIVE_URL}/robots.txt" >/tmp/mrk-robots.txt
+          grep -qi "Sitemap:" /tmp/mrk-robots.txt || {
+            echo "robots.txt does not advertise the WordPress sitemap."
+            exit 1
+          }
+
+          echo "Checking WordPress XML sitemap..."
+          curl --fail --silent --show-error --location --max-time 60 "${LIVE_URL}/wp-sitemap.xml" >/tmp/mrk-sitemap.xml
+          grep -qi "<sitemapindex" /tmp/mrk-sitemap.xml || {
+            echo "WordPress XML sitemap index not found."
+            exit 1
+          }
+
+          echo "Checking homepage SEO signals..."
+          curl --fail --silent --show-error --location --max-time 60 "${LIVE_URL}/" >/tmp/mrk-seo-home.html
+          grep -qi 'name="description"' /tmp/mrk-seo-home.html || {
+            echo "Homepage meta description missing."
+            exit 1
+          }
+          grep -qi 'rel="canonical"' /tmp/mrk-seo-home.html || {
+            echo "Homepage canonical link missing."
+            exit 1
+          }
+          grep -qi 'application/ld+json' /tmp/mrk-seo-home.html || {
+            echo "Homepage structured data missing."
+            exit 1
+          }
+
+          echo "Checking canonical navigation URLs are present..."
+          for path in /about/ /services/ /projects/ /blog/ /faq/ /contact/; do
+            grep -q "href=\"${path}\"" /tmp/mrk-seo-home.html || {
+              echo "Canonical navigation URL missing from homepage: ${path}"
+              exit 1
+            }
+          done
+
+          if grep -q 'href="/about-2/\|href="/services-2/\|href="/blog-2/\|href="/faq-2/\|href="/contact-2/' /tmp/mrk-seo-home.html; then
+            echo "Legacy duplicate navigation URL detected on homepage."
+            exit 1
+          fi
+
+          echo "SEO and earning-readiness smoke tests passed."
+
       - name: Smoke-test canonical Live pages
         shell: bash
         run: |
