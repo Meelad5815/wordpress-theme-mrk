@@ -1035,3 +1035,6 @@ function mrk_digital_legacy_redirects() {
     }
 }
 add_action( 'template_redirect', 'mrk_digital_legacy_redirects', 1 );
+
+/* MRK Digital SEO and earning-readiness layer. */
+require get_template_directory() . '/inc/mrk-seo.php';
