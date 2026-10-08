@@ -74,11 +74,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -d "pantheon-site/wp-content/themes/${THEME_DIR}" || {
-            echo "Pantheon Dev does not contain wp-content/themes/${THEME_DIR}"
+          test -d "pantheon-site/wp-content/themes" || {
+            echo "Pantheon Dev does not contain wp-content/themes"
             exit 1
           }
 
+          # The target theme directory may not exist yet on Pantheon Dev.
+          # Create/replace only this theme directory and leave all other themes untouched.
+          mkdir -p "pantheon-site/wp-content/themes/${THEME_DIR}"
           rsync -a --delete "${THEME_DIR}/" "pantheon-site/wp-content/themes/${THEME_DIR}/"
 
           cd pantheon-site
