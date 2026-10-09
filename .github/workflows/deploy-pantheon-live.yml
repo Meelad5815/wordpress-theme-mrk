@@ -217,6 +217,13 @@ jobs:
           terminus wp "$LIVE" -- option update blogname "MRK Digital Center"
           terminus wp "$LIVE" -- option update blogdescription "Web, App, WordPress, Automation & Digital Services"
           terminus wp "$LIVE" -- option update timezone_string "Asia/Karachi"
+          # Production should be crawlable for SEO/AdSense readiness; Dev may remain noindex.
+          terminus wp "$LIVE" -- option update blog_public 1
+          # Set explicit homepage metadata for Yoast so the production homepage has a useful snippet.
+          terminus wp "$LIVE" -- post meta update "$HOME_ID" _yoast_wpseo_title "MRK Digital Center | Web Development, SEO & Automation Pakistan"
+          terminus wp "$LIVE" -- post meta update "$HOME_ID" _yoast_wpseo_metadesc "MRK Digital Center provides WordPress websites, web and app development, PLC and industrial automation, Arduino and ESP32 projects, graphic design, SEO and digital services in Pakistan."
+          # Remove a page-level Yoast noindex override from the canonical homepage if one exists.
+          terminus wp "$LIVE" -- post meta delete "$HOME_ID" _yoast_wpseo_meta-robots-noindex >/dev/null 2>&1 || true
 
           # Remove legacy duplicate pages by their old slugs; WP-CLI sends them to Trash.
           for slug in about-2 services-2 blog-2 faq-2 contact-2 contact-mrk-digital-center mrk-digital-center-web-app-graphic-design-digital-services-2 sample-page; do
