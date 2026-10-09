@@ -16,8 +16,8 @@ get_header();
           <h1 id="mrk-hero-title">آپ کی ہر آن لائن ضرورت، ایک ہی جگہ!</h1>
           <p class="mrk-hero-subtitle">اب تمام سرکاری، آن لائن، ویب، گرافک، آٹومیشن اور ٹیکنالوجی کی خدمات ایک ہی جگہ پروفیشنل انداز میں حاصل کریں۔</p>
           <div class="mrk-actions">
-            <a class="mrk-btn mrk-btn-gold" href="<?php echo esc_url( home_url('/contact-2/') ); ?>">رابطہ کریں</a>
-            <a class="mrk-btn mrk-btn-outline" href="<?php echo esc_url( home_url('/services-2/') ); ?>">تمام سروسز دیکھیں</a>
+            <a class="mrk-btn mrk-btn-gold" href="<?php echo esc_url( home_url('/contact/') ); ?>">رابطہ کریں</a>
+            <a class="mrk-btn mrk-btn-outline" href="<?php echo esc_url( home_url('/services/') ); ?>">تمام سروسز دیکھیں</a>
           </div>
           <div class="mrk-trust">
             <span>✓ Mobile Friendly</span>
@@ -89,7 +89,7 @@ get_header();
             <span class="mrk-service-number"><?php echo esc_html( $service['icon'] ); ?></span>
             <h3><?php echo esc_html( $service['title'] ); ?></h3>
             <p><?php echo esc_html( $service['text'] ); ?></p>
-            <a class="mrk-card-link" href="<?php echo esc_url( home_url('/services-2/') ); ?>">تفصیل دیکھیں <span aria-hidden="true">→</span></a>
+            <a class="mrk-card-link" href="<?php echo esc_url( home_url('/services/') ); ?>">تفصیل دیکھیں <span aria-hidden="true">→</span></a>
           </article>
         <?php
           endforeach;
@@ -168,7 +168,7 @@ get_header();
         <h2 id="mrk-cta-title">اپنا کام آج ہی شروع کریں</h2>
         <p>ویب سائٹ، آن لائن سروس، گرافک ڈیزائن، PLC یا automation project کے لیے ہم سے رابطہ کریں۔</p>
       </div>
-      <a class="mrk-btn mrk-btn-gold" href="<?php echo esc_url( home_url('/contact-2/') ); ?>">ابھی رابطہ کریں</a>
+      <a class="mrk-btn mrk-btn-gold" href="<?php echo esc_url( home_url('/contact/') ); ?>">ابھی رابطہ کریں</a>
     </div>
   </section>
 
