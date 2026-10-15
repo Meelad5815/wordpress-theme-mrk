@@ -2728,3 +2728,57 @@ button, input[type="submit"], .mrk-btn, .mrk-card-link { min-height:44px; }
 }
 
 /* MRK Pantheon deployment sync: 2026-10-08 */
+
+
+/* MRK 2026 conversion-focused homepage refresh */
+:root{--mrk-navy:#07152b;--mrk-navy-2:#123b68;--mrk-gold:#f5c542;--mrk-ink:#172033;--mrk-soft:#f4f7fb}
+body{color:var(--mrk-ink);background:#fff;font-size:16px;line-height:1.75}
+.mrk-home .mrk-hero{position:relative;isolation:isolate;padding:clamp(58px,8vw,104px) 0;background:radial-gradient(circle at 82% 20%,rgba(245,197,66,.16),transparent 28%),linear-gradient(130deg,#061225 0%,#0b2545 55%,#123b68 100%)}
+.mrk-home .mrk-hero:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.14;background-image:linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(90deg,transparent,#000)}
+.mrk-home .mrk-hero-grid{gap:clamp(28px,5vw,72px);align-items:center}
+.mrk-home .mrk-kicker,.mrk-home .mrk-eyebrow{letter-spacing:1.5px}
+.mrk-home .mrk-hero h1{max-width:780px;font-size:clamp(36px,5.2vw,66px);line-height:1.18;letter-spacing:-.5px}
+.mrk-home .mrk-hero-subtitle{max-width:700px;font-size:clamp(16px,1.7vw,19px);line-height:1.9}
+.mrk-home .mrk-hero-panel{border-color:rgba(245,197,66,.32);background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.035));box-shadow:0 25px 70px rgba(0,0,0,.25)}
+.mrk-home .mrk-panel-badge{background:rgba(245,197,66,.08);border-color:var(--mrk-gold);color:var(--mrk-gold)}
+.mrk-home .mrk-btn{border-radius:9px!important;min-height:48px;padding:13px 22px!important}
+.mrk-home .mrk-btn-gold{background:var(--mrk-gold);color:#07152b!important;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.mrk-home .mrk-btn-light{background:#fff;color:#07152b!important;border:1px solid #fff}
+.mrk-home .mrk-btn-light:hover{background:#f4f7fb}
+.mrk-featured-automation{position:relative;overflow:hidden;padding:clamp(54px,7vw,88px) 0;background:#f4f7fb;border-top:1px solid #e6ebf2;border-bottom:1px solid #e6ebf2}
+.mrk-automation-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:clamp(30px,6vw,82px);align-items:center}
+.mrk-automation-copy h2{color:#07152b;font-size:clamp(28px,3.5vw,44px);line-height:1.25;margin:8px 0 16px;padding:0;font-weight:850}
+.mrk-automation-copy>p{color:#536176;font-size:16px;line-height:1.9}
+.mrk-automation-copy .mrk-eyebrow{color:#987616;font-size:11px;font-weight:900;letter-spacing:1.4px}
+.mrk-automation-points{list-style:none;margin:20px 0 24px;padding:0;display:grid;gap:10px}
+.mrk-automation-points li{position:relative;padding-left:30px;color:#24344b;line-height:1.7}
+.mrk-automation-points li:before{content:"✓";position:absolute;left:0;top:1px;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#e8d58b;color:#07152b;font-size:12px;font-weight:900}
+.mrk-automation-note{font-size:12px!important;line-height:1.7!important;color:#6b7788!important;margin-top:16px!important}
+.mrk-automation-visual{position:relative;min-height:370px;display:grid;place-items:center;border-radius:22px;background:radial-gradient(circle at 50% 45%,#1d4d76 0%,#0b2340 50%,#061225 100%);overflow:hidden;box-shadow:0 25px 60px rgba(7,21,43,.2);border:1px solid rgba(245,197,66,.3)}
+.mrk-automation-visual:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:25px 25px;opacity:.45}
+.mrk-circuit-orbit{position:absolute;border:1px solid rgba(245,197,66,.25);border-radius:50%;width:300px;height:300px}
+.mrk-orbit-one{transform:rotateX(62deg) rotateZ(20deg)}
+.mrk-orbit-two{transform:rotateX(62deg) rotateZ(-45deg);width:240px;height:240px}
+.mrk-control-panel{position:relative;z-index:1;width:min(76%,310px);padding:22px;border:1px solid rgba(245,197,66,.45);border-radius:14px;background:linear-gradient(145deg,#142f4e,#08182c);box-shadow:0 20px 45px rgba(0,0,0,.35);transform:rotate(-2deg)}
+.mrk-control-label{display:block;color:#f5c542;font-size:10px;font-weight:900;letter-spacing:2px;margin-bottom:18px}
+.mrk-control-screen{position:relative;display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px;padding:16px;background:#061225;border:1px solid rgba(245,197,66,.2);border-radius:8px;color:#a9bfd4}
+.mrk-control-screen span{font-size:10px;letter-spacing:1px}
+.mrk-control-screen strong{grid-row:2;color:#62e6b4;font-size:22px;letter-spacing:2px}
+.mrk-control-screen i{width:6px;height:6px;background:#62e6b4;border-radius:50%;box-shadow:0 0 12px #62e6b4}
+.mrk-control-modules{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.mrk-control-modules span{padding:12px 5px;text-align:center;background:#0d2742;border:1px solid rgba(255,255,255,.1);border-radius:6px;color:#fff;font-size:11px;font-weight:800}
+.mrk-control-wires{display:flex;gap:8px;margin-top:14px}
+.mrk-control-wires b{height:4px;flex:1;border-radius:10px;background:#f5c542}
+.mrk-control-wires b:nth-child(2){background:#62e6b4}.mrk-control-wires b:nth-child(3){background:#4db6ff}.mrk-control-wires b:nth-child(4){background:#ed7890}
+.mrk-home .mrk-section{padding:clamp(48px,6vw,78px) 0}
+.mrk-home .mrk-section-head{margin-bottom:34px}
+.mrk-home .mrk-section-head h2{font-size:clamp(27px,3.4vw,40px);line-height:1.25}
+.mrk-home .mrk-service-card,.mrk-home .mrk-project-card,.mrk-home .mrk-step{border:1px solid #e5eaf1;border-radius:15px;box-shadow:0 8px 26px rgba(7,21,43,.055)}
+.mrk-home .mrk-service-card{min-height:220px}
+.mrk-home .mrk-service-card:hover,.mrk-home .mrk-project-card:hover,.mrk-home .mrk-step:hover{border-color:rgba(201,162,39,.65)}
+.mrk-home .mrk-project-thumb{aspect-ratio:16/9;background:#e8eef5}
+.mrk-home .mrk-project-thumb img{width:100%;height:100%;object-fit:cover}
+.mrk-home .mrk-cta{background:linear-gradient(120deg,#07152b,#123b68);border-top:3px solid #f5c542}
+.mrk-home .mrk-floating-whatsapp{background:#07152b;border-color:#f5c542}
+@media(max-width:900px){.mrk-automation-grid{grid-template-columns:1fr}.mrk-automation-visual{min-height:320px}.mrk-automation-copy{max-width:780px}}
+@media(max-width:600px){.mrk-home .mrk-hero{padding:48px 0}.mrk-automation-visual{min-height:280px}.mrk-control-panel{width:78%;padding:17px}.mrk-home .mrk-trust{grid-template-columns:1fr 1fr!important}.mrk-home .mrk-service-card{min-height:0}.mrk-automation-copy .mrk-actions{display:grid;grid-template-columns:1fr}.mrk-automation-copy .mrk-btn{width:100%}}
