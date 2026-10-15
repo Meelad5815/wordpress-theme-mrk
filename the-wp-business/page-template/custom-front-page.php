@@ -14,7 +14,7 @@ get_header();
         <div class="mrk-hero-copy">
           <span class="mrk-kicker">MRK DIGITAL & ONLINE SERVICES CENTER</span>
           <h1 id="mrk-hero-title">آپ کی ہر آن لائن ضرورت، ایک ہی جگہ!</h1>
-          <p class="mrk-hero-subtitle">اب تمام سرکاری، آن لائن، ویب، گرافک، آٹومیشن اور ٹیکنالوجی کی خدمات ایک ہی جگہ پروفیشنل انداز میں حاصل کریں۔</p>
+          <p class="mrk-hero-subtitle">ویب سائٹس، Arduino/ESP32، PLC آٹومیشن اور ڈیجیٹل سروسز — آپ کے کام کے لیے واضح، عملی اور بجٹ کے مطابق حل۔</p>
           <div class="mrk-actions">
             <a class="mrk-btn mrk-btn-gold" href="<?php echo esc_url( home_url('/contact/') ); ?>">رابطہ کریں</a>
             <a class="mrk-btn mrk-btn-outline" href="<?php echo esc_url( home_url('/services/') ); ?>">تمام سروسز دیکھیں</a>
@@ -27,13 +27,44 @@ get_header();
         </div>
         <div class="mrk-hero-panel" aria-label="MRK Digital service highlights">
           <div class="mrk-panel-badge">MRK</div>
-          <h2>Digital + Engineering</h2>
-          <p>Web & App Development • SEO • PLC • Arduino/ESP32 • Electrical & Online Services</p>
+          <h2>Automation + Digital Solutions</h2>
+          <p>PLC Logic • Arduino/ESP32 • Sensors • Motor/Pump Control • Web & App Development</p>
           <div class="mrk-stats">
             <div><strong>8+</strong><span>Core Areas</span></div>
             <div><strong>24/7</strong><span>Online Inquiry</span></div>
             <div><strong>100%</strong><span>Mobile First</span></div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mrk-featured-automation" aria-labelledby="mrk-automation-title">
+    <div class="container mrk-automation-grid">
+      <div class="mrk-automation-copy">
+        <span class="mrk-eyebrow">FLAGSHIP SERVICE · INDUSTRIAL AUTOMATION</span>
+        <h2 id="mrk-automation-title">مشین، موٹر یا کنٹرول سسٹم کے لیے عملی آٹومیشن حل</h2>
+        <p>Arduino اور ESP32 prototypes سے لے کر PLC logic، sensors، pump/motor control اور monitoring dashboards تک — ہر کام کی scope، components اور testing پہلے واضح کی جاتی ہے۔</p>
+        <ul class="mrk-automation-points">
+          <li>Arduino / ESP32 اور sensor-based projects</li>
+          <li>PLC programming concepts، control logic اور troubleshooting</li>
+          <li>Smart irrigation، tank-level اور pump-control prototypes</li>
+          <li>Web dashboards اور IoT monitoring کے ابتدائی حل</li>
+        </ul>
+        <div class="mrk-actions">
+          <a class="mrk-btn mrk-btn-gold" href="<?php echo esc_url( home_url('/contact-2/') ); ?>">آٹومیشن پروجیکٹ پر بات کریں</a>
+          <a class="mrk-btn mrk-btn-light" href="<?php echo esc_url( home_url('/projects/') ); ?>">نمونہ پروجیکٹس دیکھیں</a>
+        </div>
+        <p class="mrk-automation-note">نوٹ: صنعتی تنصیب اور high-voltage کام صرف مناسب qualification، site assessment اور safety review کے بعد قبول کیے جائیں گے۔</p>
+      </div>
+      <div class="mrk-automation-visual" role="img" aria-label="PLC، Arduino اور industrial control systems کی نمائندگی کرنے والا تکنیکی پینل">
+        <div class="mrk-circuit-orbit mrk-orbit-one"></div>
+        <div class="mrk-circuit-orbit mrk-orbit-two"></div>
+        <div class="mrk-control-panel">
+          <span class="mrk-control-label">MRK CONTROL LAB</span>
+          <div class="mrk-control-screen"><span>CONTROL</span><strong>READY</strong><i></i><i></i><i></i></div>
+          <div class="mrk-control-modules"><span>PLC</span><span>ESP32</span><span>I/O</span></div>
+          <div class="mrk-control-wires"><b></b><b></b><b></b><b></b></div>
         </div>
       </div>
     </div>
